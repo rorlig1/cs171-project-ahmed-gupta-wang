@@ -1,0 +1,5 @@
+"_id" : ObjectId\(.*\),
+
+//sed command
+
+sed  's/"_id" : ObjectId(".*")//g' output_limit_30_2.json | less
