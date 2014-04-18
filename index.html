@@ -5,29 +5,54 @@
     <link href="css/bootstrap.css" rel="stylesheet">
 </head>
 <body>
-<header>
-    <div class="content">
-        <div class="col-md-12">
-
-        <h1>Yelp Data Visualization
-        </h1>
-        </div>
+ <script src="//code.jquery.com/jquery.js"></script>
+<script src="js/bootstrap.js"></script>
+ <div class="container-fluid">
+    <div class="jumbotron">
+        <h2 class="text-center">Yelp Data Visualization</h2>
     </div>
-</header>
-<section id="vis">
-    <div class="container">
-        <div class="col-md-12">
-        <div id= "restaurant_name"></div>
-        <div id="hint_text">Move The Left and Right Arrow Key to Change the Restaurants</div>
-        <div id="tiles"></div>
-        </div>
+</div>
+<div class="container" id="vis">
+  <div class="row" id="row1">
+    <div class="col-md-6">
+      <h3 class="text-center">$</h3>
+       <div id="svg1"></div>
 
     </div>
-</section>
+
+    <div class="col-md-6">
+
+      <h3 class="text-center">$$</h3>
+       <div id="svg2"></div>
+
+      
+    </div>
+  </div>
+  <div class="row" id="row2">
+    <div class="col-md-6">
+      <h3 class="text-center">$$$</h3>
+      <div id="svg3"></div>
+
+    </div>
+
+    <div class="col-md-6">
+      <h3 class="text-center">$$$$</h3>
+      <div id="svg4"></div>
+   </div>
+  </div>
+
+    
+</div>
+
+
+
+
 
 <script src="js/d3.js"></script>
 <script src="js/colorbrewer.js"></script>
-<script src="js/checkin_tile.js"></script>
+<script src="js/underscore.js"></script>
+<script src="js/restaurant_clusters.js"></script>
+
 
 </body>
 </html>
