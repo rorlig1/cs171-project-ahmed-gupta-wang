@@ -27,16 +27,19 @@ var svg = d3.select("body").append("svg")
 
 
 var projection = d3.geo.albersUsa()
-                       .translate([width/2, height/2])
-                       // .scale([500]);
+                       .translate([width/2 , height/2])
+                       // .precision(0.000001)
+                       // .scale(1);
 
 var path = d3.geo.path().projection(projection);
 
 
-d3.json("data/phoenix2.json", function(json) {
-		console.log(json);
+d3.json("data/phoenix-topo-2.json", function(data) {
+	 var usMap = topojson.feature(data,data.objects.phoenix2).features
+    console.log(data);
+		console.log(usMap);
         svg.selectAll("path")
-           .data(json)
+           .data(usMap)
            .enter()
            .append("path")
            .attr("d", path);
