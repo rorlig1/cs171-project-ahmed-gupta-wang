@@ -19,14 +19,14 @@
 <div id='map'></div>
 <script>
 var map = L.mapbox.map('map', 'examples.map-9ijuk24y')
-    .setView([33.443419, -112.092092], 10);
+    .setView([33.443419, -112.092092], 9);
 
 // As with any other AJAX request, this technique is subject to the Same Origin Policy:
 // http://en.wikipedia.org/wiki/Same_origin_policy
 // So the CSV file must be on the same domain as the Javascript, or the server
 // delivering it should support CORS.
 var featureLayer = L.mapbox.featureLayer()
-    .loadURL('data/phoenix.json')
+    .loadURL('data/phoenix2.json')
     .addTo(map);
 </script>
 

@@ -73,9 +73,9 @@ var vis = function(values) {
 	var force2 = d3.layout.force()
 		.nodes(data2)
 		.size([width, height])
-		.gravity(10)
-		.charge(-100)
-		.linkDistance(40)
+		.gravity(0)
+		.charge(0)
+		// .linkDistance(40)
 		.on("tick", tick)
 		.start();
 
@@ -116,6 +116,7 @@ var vis = function(values) {
 
 	function tick(e) {
 		node1
+		.each(collide(0.1))
 			.attr("cx", function(d) { return d.x; })
 			.attr("cy", function(d) { return d.y; })
 			.attr("r",function(d) { return d.review_count;});

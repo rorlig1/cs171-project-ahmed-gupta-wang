@@ -28,7 +28,7 @@
 
 	var map = new L.Map('map', {
 		center: new L.LatLng( 33.443419, -112.092092), 
-		zoom: 10, 
+		zoom: 9, 
 		layers: [cloudmade]
 	});
 					
@@ -39,8 +39,8 @@
 	var svg = d3.select("#map").select("svg"),
 	g = svg.append("g");
 	
-	d3.json("data/phoenix.json", function(json) {
-		L.geoJson(json.features).addTo(map);
+	d3.json("data/phoenix2.json", function(json) {
+		L.geoJson(json).addTo(map);
 		
 	})			 
 </script>

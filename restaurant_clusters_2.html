@@ -1,0 +1,188 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>delimited | Force Bubble Charts in D3</title>
+    <link rel="shortcut icon" href="../common/delimited-favicon-v4.ico">
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        background-color: black;
+        padding-left: 50px;
+      }
+      circle {
+        stroke: white;
+        stroke-width: 2px;
+        opacity: .8;
+      }
+      .btn-group {
+        margin-left: 330px;
+      }
+      .label {
+        fill: white;
+        font-size: 16px;
+      }
+    </style>
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-45101494-1']);
+    _gaq.push(['_setDomainName', 'delimited.io']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+  </head>
+  <body>
+    </div class="row">
+      <div class="btn-group" data-toggle="buttons">
+        <label class="btn btn-primary active" id="make">
+          <input type="radio" name="options"> Price
+        </label>
+        <label class="btn btn-primary" id="drive">
+          <input type="radio" name="options"> Type
+        </label>
+        <label class="btn btn-primary" id="trans">
+          <input type="radio" name="options"> ?????
+        </label>
+      </div>
+    </div>
+    <div id="chart"></div>
+    <script src="js/d3.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/underscore.js"></script>
+    <script>
+      d3.csv('data/fuel.csv', function (error, data) {
+
+        var width = 800, height = 800;
+        var fill = d3.scale.ordinal().range(['#827d92','#827354','#523536','#72856a','#2a3285','#383435'])
+        var svg = d3.select("#chart").append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        _.each(data, function (elem) {
+          elem.radius = +elem.comb / 2;
+          elem.x = _.random(0, width);
+          elem.y = _.random(0, height);
+        })
+
+        var padding = 2;
+        var maxRadius = d3.max(_.pluck(data, 'radius'));
+
+        function getCenters(vname, w, h) {
+          var v = _.uniq(_.pluck(data, vname)), c =[];
+          var l = d3.layout.treemap().size([w, h]).ratio(1/1);
+          _.each(v, function (k, i) { c.push({name: k, value: 1}); });
+          return _.object(v,l.nodes({children: c})[0].children);
+        }
+
+        var nodes = svg.selectAll("circle")
+          .data(data);
+
+        nodes.enter().append("circle")
+          .attr("class", "node")
+          .attr("cx", function (d) { return d.x; })
+          .attr("cy", function (d) { return d.y; })
+          .attr("r", function (d) { return d.radius; })
+          .style("fill", function (d) { return fill(d.make); })
+          .on("mouseover", function (d) { showPopover.call(this, d); })
+          .on("mouseout", function (d) { removePopovers(); })
+
+        var force = d3.layout.force()
+          .charge(0)
+          .gravity(0)
+          .size([width, height])
+
+        draw('make');
+
+        $( ".btn" ).click(function() {
+          draw(this.id);
+        });
+
+        function draw (varname) {
+          var foci = getCenters(varname, 800, 800);
+          force.on("tick", tick(foci, varname, .55));
+          labels(foci)
+          force.start();
+        }
+
+        function tick (foci, varname, k) {
+          return function (e) {
+           data.forEach(function (o, i) {
+              var f = foci[o[varname]];
+              o.y += ((f.y + (f.dy / 2)) - o.y) * k * e.alpha;
+              o.x += ((f.x + (f.dx / 2)) - o.x) * k * e.alpha;
+            });
+            nodes
+              .each(collide(.1))
+              .attr("cx", function (d) { return d.x; })
+              .attr("cy", function (d) { return d.y; });
+          }
+        }
+
+        function labels (foci) {
+          svg.selectAll(".label").remove();
+
+          svg.selectAll(".label")
+          .data(_.toArray(foci)).enter().append("text")
+          .attr("class", "label")
+          .text(function (d) { return d.name })
+          .attr("transform", function (d) {
+            return "translate(" + (d.x + (d.dx / 2)) + ", " + (d.y + 20) + ")";
+          });
+        }
+
+        function removePopovers () {
+          $('.popover').each(function() {
+            $(this).remove();
+          }); 
+        }
+
+        function showPopover (d) {
+          $(this).popover({
+            placement: 'auto top',
+            container: 'body',
+            trigger: 'manual',
+            html : true,
+            content: function() { 
+              return "Make: " + d.make + "<br/>Model: " + d.model + 
+                     "<br/>Trans: " + d.trans + "<br/>MPG: " + d.comb; }
+          });
+          $(this).popover('show')
+        }
+
+        function collide(alpha) {
+          var quadtree = d3.geom.quadtree(data);
+          return function (d) {
+            var r = d.radius + maxRadius + padding,
+                nx1 = d.x - r,
+                nx2 = d.x + r,
+                ny1 = d.y - r,
+                ny2 = d.y + r;
+            quadtree.visit(function(quad, x1, y1, x2, y2) {
+              if (quad.point && (quad.point !== d)) {
+                var x = d.x - quad.point.x,
+                    y = d.y - quad.point.y,
+                    l = Math.sqrt(x * x + y * y),
+                    r = d.radius + quad.point.radius + padding;
+                if (l < r) {
+                  l = (l - r) / l * alpha;
+                  d.x -= x *= l;
+                  d.y -= y *= l;
+                  quad.point.x += x;
+                  quad.point.y += y;
+                }
+              }
+              return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
+            });
+          };
+        }
+      });
+    </script>
+  </body>
+</html>
