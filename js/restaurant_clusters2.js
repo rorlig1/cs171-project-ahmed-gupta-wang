@@ -68,6 +68,7 @@ d3.json('data/output_limit_30.json', function (error, data) {
 		.style("fill", function (d) { return fill(d.category); })
 		.on("mouseover", function (d) { showPopover.call(this, d); })
 		.on("mouseout", function (d) { removePopovers(); })
+		.on("click", function(d) {clickPopover.call(this,d)})
 
 	var force = d3.layout.force()
 		.charge(0)
@@ -134,6 +135,14 @@ d3.json('data/output_limit_30.json', function (error, data) {
 				 "<br/>Category : " + d.category;}
 		});
 		$(this).popover('show')
+	}
+
+	function clickPopover (d) {
+		updateHeatmap(d);
+	}
+
+	function updateHeatmap(d) {
+
 	}
 
 	function collide(alpha) {
