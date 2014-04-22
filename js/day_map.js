@@ -120,10 +120,6 @@ combinations = [
 "day": 0 
 },
 {
-"lookup" : "24-0",
-"hour" : 24,
-"day": 0 
-},{
  "lookup" : "0-1",
 "hour" : 0,
 "day": 1
@@ -241,11 +237,6 @@ combinations = [
 {
 "lookup" : "23-1",
 "hour" : 23,
-"day": 1 
-},
-{
-"lookup" : "24-1",
-"hour" : 24,
 "day": 1 
 },{
  "lookup" : "0-2",
@@ -366,11 +357,6 @@ combinations = [
 "lookup" : "23-2",
 "hour" : 23,
 "day": 2 
-},
-{
-"lookup" : "24-2",
-"hour" : 24,
-"day": 2 
 },{
  "lookup" : "0-3",
 "hour" : 0,
@@ -490,11 +476,6 @@ combinations = [
 "lookup" : "23-3",
 "hour" : 23,
 "day": 3 
-},
-{
-"lookup" : "24-3",
-"hour" : 24,
-"day": 3 
 },{
  "lookup" : "0-4",
 "hour" : 0,
@@ -613,11 +594,6 @@ combinations = [
 {
 "lookup" : "23-4",
 "hour" : 23,
-"day": 4 
-},
-{
-"lookup" : "24-4",
-"hour" : 24,
 "day": 4 
 },{
  "lookup" : "0-5",
@@ -740,11 +716,6 @@ combinations = [
 "day": 5 
 },
 {
-"lookup" : "24-5",
-"hour" : 24,
-"day": 5 
-},
-{
  "lookup" : "0-6",
 "hour" : 0,
 "day": 6
@@ -863,135 +834,5 @@ combinations = [
 "lookup" : "23-6",
 "hour" : 23,
 "day": 6 
-},
-{
-"lookup" : "24-6",
-"hour" : 24,
-"day": 6 
-},
-{
- "lookup" : "0-7",
-"hour" : 0,
-"day": 7
-},
-{
-"lookup" : "1-7",
-"hour" : 1,
-"day": 7 
-},
-{
- "lookup" : "2-7",
-"hour" : 2,
-"day": 7
-},
-{
-"lookup" : "3-7",
-"hour" : 3,
-"day": 7 
-},
-{
- "lookup" : "4-7",
-"hour" : 4,
-"day": 7
-},
-{
-"lookup" : "5-7",
-"hour" : 5,
-"day": 7 
-},
-{
- "lookup" : "6-7",
-"hour" : 6,
-"day": 7
-},
-{
-"lookup" : "7-7",
-"hour" : 7,
-"day": 7 
-},
-{
-"lookup" : "8-7",
-"hour" : 8,
-"day": 7 
-},
-{
-"lookup" : "9-7",
-"hour" : 9,
-"day": 7 
-},
-{
-"lookup" : "10-7",
-"hour" : 10,
-"day": 7 
-},
-{
-"lookup" : "11-7",
-"hour" : 11,
-"day": 7 
-},
-{
-"lookup" : "12-7",
-"hour" : 12,
-"day": 7 
-},
-{
-"lookup" : "13-7",
-"hour" : 13,
-"day": 7 
-},
-{
-"lookup" : "14-7",
-"hour" : 14,
-"day": 7 
-},
-{
-"lookup" : "15-7",
-"hour" : 15,
-"day": 7 
-},
-{
-"lookup" : "16-7",
-"hour" : 16,
-"day": 7 
-},
-{
-"lookup" : "17-7",
-"hour" : 17,
-"day": 7 
-},
-{
-"lookup" : "18-7",
-"hour" : 18,
-"day": 7 
-},
-{
-"lookup" : "19-7",
-"hour" : 19,
-"day": 7 
-},
-{
-"lookup" : "20-7",
-"hour" : 20,
-"day": 7 
-},
-{
-"lookup" : "21-7",
-"hour" : 21,
-"day": 7 
-},
-{
-"lookup" : "22-7",
-"hour" : 22,
-"day": 7 
-},
-{
-"lookup" : "23-7",
-"hour" : 23,
-"day": 7 
-},
-{
-"lookup" : "24-7",
-"hour" : 24,
-"day": 7 
 }
 ]
