@@ -2,7 +2,7 @@
  * Created by admin on 4/20/14.
  */
 var top8 =  ["Mexican", "American (Traditional)", "Sandwiches", "Pizza", "Nightlife", "Bars","Italian", "American (New)"];
-d3.json('data_revised/output_phoenix_top8_30.json', function (error, data) {
+d3.json('data_with_open/output_phoenix_30.json', function (error, data) {
 
 	console.log(data);
 	_.each(data, function(elem){
