@@ -1,11 +1,38 @@
+/* 
+* determine top 8... 
+*/ 
+categoryMap = {}
 function printResults(r){
-	printjsononeline(r)
+	// print(r.categories.length)
+	r.categories.forEach(function(category){
+		// print(category)
+		if (categoryMap[category]==undefined){
+			categoryMap[category] = 1;
+		} else {
+			categoryMap[category]++;
+		}
+	})
+	// r.categories.forEach(function(category){
+	// 	console.log('hello')
+	// })
+		// // printjsononeline(r)
 	// .replace("_id" : ObjectId\(.*\), '');
 }
-db.business.find({categories:"Restaurants", checkin : { $exists:true }},
-	{checkin:1, review_count: 1, categories:1, city:1, state:1, name:1,
-		latitude:1, longitude:1, full_address:1, "attributes.Price Range":1 , _id: 0
-	})
-	.forEach(printResults)
-	
+db.business2.find({},{categories:1, "_id":0}	
+	).forEach(printResults)
+
+// print(JSON.stringify(categoryMap));
+var tuples = [];
+
+for (category in categoryMap) {
+	print(category);
+	tuples.push([category, categoryMap[category]])
+
+}
+
+tuples.sort(function(a,b){
+	return b[1] - a[1];
+})
+
+print(JSON.stringify(tuples))
 

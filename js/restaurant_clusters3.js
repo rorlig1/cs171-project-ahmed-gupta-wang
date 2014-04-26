@@ -2,7 +2,7 @@
  * Created by admin on 4/20/14.
  */
 var top8 =  ["Mexican", "American (Traditional)", "Sandwiches", "Pizza", "Nightlife", "Bars","Italian", "American (New)"];
-d3.json('data_revised/output_phoenix_top8_30.json', function (error, data) {
+d3.json('data_with_open/output_phoenix_30.json', function (error, data) {
 
 	console.log(data);
 	_.each(data, function(elem){
@@ -66,8 +66,8 @@ d3.json('data_revised/output_phoenix_top8_30.json', function (error, data) {
 		.attr("cx", function (d) { return d.x; })
 		.attr("cy", function (d) { return d.y; })
 		.attr("r", function (d) { return d.radius; })
-		.style("fill", function (d) { return fill(d.category); })
-		.style("fill", function (d) { return fill(d.category); })
+		.style("fill", function (d) { return fill( d.open); })
+		// .style("fill", function (d) { return fill(d.open); })
 		.on("mouseover", function (d) { showPopover.call(this, d); })
 		.on("mouseout", function (d) { removePopovers(); })
 		.on("click", function(d) {clickPopover.call(this,d)})
