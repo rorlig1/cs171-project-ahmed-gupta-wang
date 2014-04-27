@@ -7,12 +7,17 @@ function printResult (checkin, r) {
 
 
 function getReviews (r) {
-//	print("business " + r.business_id);
+	print("business " + r.business_id);
+	var reviewArr = []
 	db.review.find({business_id: r.business_id}).forEach(function(reviews) {
 
-		print("reviews votes for business " + r.business_id + " review " + JSON.stringify(reviews.votes));
-//		db.business.update({"business_id": r.business_id}, {$set: {"votes": votes}})
+		reviewArr.push(reviews.votes);
 
-	})	// body...
+		print("reviews votes for business " + r.business_id + " review " + JSON.stringify(reviews.votes));
+
+	})	
+
+	db.business2.update({"_id": r._id}, {$set: {"votes": reviewArr}})
+
 }
-db.business2.find().limit(1).forEach(getReviews)
+db.business2.find().forEach(getReviews)
