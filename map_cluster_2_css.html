@@ -182,7 +182,10 @@ var tiles = L.tileLayer('https://a.tiles.mapbox.com/v3/vieriw.i3f0efm1/{z}/{x}/{
 		_.each(restaurantsInNeighborhood, function(restaurant){
 			console.log("lat: " + restaurant.latitude + " long: " + restaurant.longitude);
 			var latLng = new L.LatLng(restaurant.latitude,  restaurant.longitude);
-			var marker = new L.Marker(new L.LatLng(restaurant.latitude,  restaurant.longitude),{icon: restaurantIcon});
+			var marker = new L.Marker(new L.LatLng(restaurant.latitude,  restaurant.longitude),{icon: restaurantIcon})
+			                 .on("click", function(e) {
+        				     console.log(!);
+                             });
 			markerGroup.push(marker);
 			// marker.addTo(map)
 
@@ -192,7 +195,8 @@ var tiles = L.tileLayer('https://a.tiles.mapbox.com/v3/vieriw.i3f0efm1/{z}/{x}/{
 			console.log(marker);
 			marker.addTo(map);
 		})
-		var group = new L.featureGroup(markerGroup);
+
+		var group = new L.featureGroup(markerGroup) ;
 
 		map.fitBounds(group.getBounds());
 		// console.log(row)
