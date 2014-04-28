@@ -227,14 +227,17 @@ var tiles = L.tileLayer('https://a.tiles.mapbox.com/v3/vieriw.i3f0efm1/{z}/{x}/{
 	}
 
 	function showPins () {
-		// console.log(pins);
+		console.log(pins);
+
 		_.each(pins, function(pin){
 			pin.addTo(map);
 		})	
+		// body...
 	}
 
 	function clearGeoJson(){
-		map.removeLayer(geojson)	
+		map.removeLayer(geojson)
+
 	}
 
 	function clearPins () {
@@ -250,21 +253,17 @@ var tiles = L.tileLayer('https://a.tiles.mapbox.com/v3/vieriw.i3f0efm1/{z}/{x}/{
 		})	
 	}
 
-	//set the minimum zoom.... 
-	map._layersMinZoom = 10
+		// function mapClick (e) {
+	// 	console.log(e.latlng);
+	// }
 
-	//load the clusters... 
-	d3.json('data_with_open/phoenix_geo.json', function(err, clusters){
-		//load the other data...
-		d3.json('data_with_open/output_phoenix_all.json', function (error, data) {
-			restaurantData = data;
-			neighborhoodClusters = clusters;
-			createClusters();
-			// console.log(data);
 
-		})
 
-	})
+		// var geojson = L.geoJson(geojsonSample, {
+
+		// 	// style: function (feature) {
+		// 	// 	return {color: #e3e3e3};
+		// 	// },
 
 		// 	 pointToLayer: function (feature, latlng) {
 		// 	 	console.log(latlng);
