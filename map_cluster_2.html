@@ -40,15 +40,21 @@
 	<script type="text/javascript">
 	//tile of the map....
 	var tiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-			maxZoom: 18,
+			// maxZoom: 18,
 			attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 		}),
-		latlng = L.latLng( 33.4, - 112.02 );
+		latlng = L.latLng( 33.592887216626245,  -112.0550537109375);
 
 	//main map object
-	var map = L.map('map', {center: latlng, zoom: 9, layers: [tiles]});
+	var map = L.map('map', {center: latlng, zoom: 10, layers: [tiles]});
 
 	var pins = [];
+
+	var restaurantData;
+
+	var rowToExpand;
+
+	var geojson;
 
 	//customIcon for the map
 	var custIcon = L.divIcon({
@@ -63,7 +69,7 @@
 
 
 	function createClusters (clusters) {
-		var geojson = L.geoJson(clusters, {
+		 geojson = L.geoJson(clusters, {
 			 pointToLayer: function (feature, latlng) {
 			 	console.log(latlng);
          		return L.marker(latlng).bindLabel( feature.properties.name, { noHide: true });
@@ -110,12 +116,78 @@
 	            html: "" + markerLabel,
 	            // and the marker width and height
 	            iconSize: [30, 30]
-        	})
+        	}) 
 
-			pins.push(new L.Marker(latlng, {icon: icon}));
+        	var marker = new L.Marker(latlng, {icon: icon})
+        						.on("click", function(e) {
+        							rowToExpand = row;
+        							markerClick(e);
+
+        						})
+        						.on("mouseover",markerMouseOver)
+        						.on("mouseout", markerMouseOut)
+
+			pins.push(marker);
 		})
+		
+		// map.on('click', mapClick);
 
 	}
+
+	function markerClick(e){
+		console.log("marker clicked");
+		console.log(rowToExpand);
+
+		var restaurantsInNeighborhood = _.filter(restaurantData, function(data){
+			return data.neighborhood == rowToExpand.properties.name;
+		})
+
+		console.log(restaurantsInNeighborhood);
+		map.removeLayer(geojson)
+		_.each(pins, function  (pin) {
+			map.removeLayer(pin);
+			// body...
+		})
+
+		//add the markers now ... 
+		var markerGroup = []
+		_.each(restaurantsInNeighborhood, function(restaurant){
+			console.log("lat: " + restaurant.latitude + " long: " + restaurant.longitude);
+			var latLng = new L.LatLng(restaurant.latitude,  restaurant.longitude);
+			var marker = new L.Marker(new L.LatLng(restaurant.latitude,  restaurant.longitude));
+			markerGroup.push(marker);
+			marker.addTo(map)
+			
+		})
+		
+		// _.each(markerGroup, function (marker) {
+		// 	console.log(marker);
+		// 	marker.addTo(map);
+		// })
+		var group = new L.featureGroup(markerGroup);
+
+		map.fitBounds(group.getBounds());
+		// console.log(row)
+		//remove all the geojson layers and markers and add the markers for this layer...
+	}
+
+	function markerMouseOver (e) {
+		// body...
+	}
+
+	function markerMouseOut(e){
+
+	}
+
+	function showMarkers (rowToExpand) {
+		
+	}
+
+	// function mapClick (e) {
+	// 	console.log(e.latlng);
+	// }
+
+
 		
 		// var geojson = L.geoJson(geojsonSample, {
 
@@ -167,16 +239,16 @@
 		// })
 
 		//set the max and minimum zoom levels 
-		map._layersMaxZoom=11 
-		map._layersMinZoom = 9
+		// map._layersMaxZoom=17
+		// map._layersMinZoom = 9
 
 		//load the clusters... 
 		d3.json('data_with_open/phoenix_geo.json', function(err, clusters){
 			//load the other stuff...
 			d3.json('data_with_open/output_phoenix_all.json', function (error, data) {
-				// populate(data);
-				// map.addLayer(markers);
+				restaurantData = data;
 				createClusters(clusters);
+				// console.log(data);
 
 			})
 
