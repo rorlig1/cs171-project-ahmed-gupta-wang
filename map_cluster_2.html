@@ -40,7 +40,7 @@
 	<script type="text/javascript">
 	//tile of the map....
 	var tiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-			// maxZoom: 18,
+			maxZoom: 18,
 			attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 		}),
 		latlng = L.latLng( 33.592887216626245,  -112.0550537109375);
@@ -151,7 +151,7 @@
 
 		console.log(restaurantsInNeighborhood);
 
-		
+		markerGroup = [];
 
 		//add the markers now ... 
 		_.each(restaurantsInNeighborhood, function(restaurant){
@@ -285,7 +285,7 @@
 
 		//set the max and minimum zoom levels 
 		// map._layersMaxZoom=17
-		// map._layersMinZoom = 9
+		map._layersMinZoom = 10
 
 		//load the clusters... 
 		d3.json('data_with_open/phoenix_geo.json', function(err, clusters){
