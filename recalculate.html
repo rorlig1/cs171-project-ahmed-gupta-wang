@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI Slider - Snap to increments</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script>
+  $(function() {
+    $( "#sliderfunny" ).slider({
+      value:0,
+      min: -1,
+      max: 1,
+      step: 0.5,
+      slide: function( event, ui ) {
+        $( "#funny" ).val( "$" + ui.value );
+      }
+    });
+    $( "#funny" ).val( "$" + $( "#sliderfunny" ).slider( "value" ) );
+   
+    $( "#sliderhelpful" ).slider({
+      value:0,
+      min: -1,
+      max: 1,
+      step: 0.5,
+      slide: function( event, ui ) {
+        $( "#helpful" ).val( "$" + ui.value );
+      }
+    });
+    $( "#helpful" ).val( "$" + $( "#sliderhelpful" ).slider( "value" ) );
+  
+    $( "#slidercool" ).slider({
+      value:0,
+      min: -1,
+      max: 1,
+      step: 0.5,
+      slide: function( event, ui ) {
+        $( "#cool" ).val( "$" + ui.value );
+      }
+    });
+    $( "#cool" ).val( "$" + $( "#slidercool" ).slider( "value" ) );
+    
+  });
+
+    d3.json("data_with_open/output_phoenix_30.json", function(data){
+           console.log(data)
+});
+
+
+  </script>
+</head>
+<body>
+ 
+<p>
+  <label for="funny">Funny:</label>
+  <input type="text" id="funny" style="border:0; color:#f6931f; font-weight:bold;">
+</p>
+<div id="sliderfunny"></div>
+<p>
+  <label for="helpful">Helpful:</label>
+  <input type="text" id="helpful" style="border:0; color:#f6931f; font-weight:bold;">
+</p>
+<div id="sliderhelpful"></div>
+<p>
+  <label for="cool">Cool:</label>
+  <input type="text" id="cool" style="border:0; color:#f6931f; font-weight:bold;">
+</p>
+ <div id="slidercool"></div>
+ 
+</body>
+</html>
