@@ -23,12 +23,17 @@
  * text
  */
 .count-icon {
-    background:#fee;
+
+    background:#41AB5D;
+    opacity:0.8;
     text-align:center;
+    color:#ffffff;
     vertical-align:middle;
-    border:1px solid #000;
+     /*  border:1px    solid #000;*/
+    border:1px    solid #41AB5D;
     border-radius:20px;
     line-height:30px;
+
 }
 </style>
 
@@ -39,10 +44,19 @@
 	<div id="map"></div>
 	<script type="text/javascript">
 	//tile of the map....
-	var tiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-			maxZoom: 18,
-			attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+	var restaurantIcon = L.icon({
+    iconUrl: 'icon/restaurantmarker7.png',
+    iconSize: [55, 55],
+    opacity:0.6
+    /*iconAnchor: [22, 94] */
+    });
+
+
+var tiles = L.tileLayer('https://a.tiles.mapbox.com/v3/vieriw.i3f0efm1/{z}/{x}/{y}.png', {
+			maxZoom: 16,
+		//	attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 		}),
+	 
 		latlng = L.latLng( 33.592887216626245,  -112.0550537109375);
 
 	//main map object
@@ -80,7 +94,18 @@
 			 	console.log(latlng);
          		return L.marker(latlng).bindLabel( feature.properties.name, { noHide: true });
     		},
-
+                 style: function (feature ) {
+			 return{ 
+			 radius: 1,
+            /* fillColor: "#F7FCB9",*/
+             fillColor:"#FFFFE5",
+             color: "#FFFFFF",
+             weight: 1,
+             opacity: 0.8,
+             fillOpacity: 0.45
+             }
+         	 
+    		},
 			onEachFeature: function (feature, layer) {
 				console.log('clicked');
 				var popupText = 'county:  ' + feature.properties.name;
@@ -92,7 +117,7 @@
 
 		addMarkerLabels(neighborhoodClusters);
 
-			
+
 
 
 		// body...
@@ -131,7 +156,7 @@
 
 			pins.push(marker);
 		})
-		
+
 		showPins();
 		// map.on('click', mapClick);
 
@@ -143,7 +168,7 @@
 
 		clearMarkers();
 		clearPins();
-		clearGeoJson();
+		//clearGeoJson();
 
 		var restaurantsInNeighborhood = _.filter(restaurantData, function(data){
 			return data.neighborhood == rowToExpand.properties.name;
@@ -157,12 +182,12 @@
 		_.each(restaurantsInNeighborhood, function(restaurant){
 			console.log("lat: " + restaurant.latitude + " long: " + restaurant.longitude);
 			var latLng = new L.LatLng(restaurant.latitude,  restaurant.longitude);
-			var marker = new L.Marker(new L.LatLng(restaurant.latitude,  restaurant.longitude));
+			var marker = new L.Marker(new L.LatLng(restaurant.latitude,  restaurant.longitude),{icon: restaurantIcon});
 			markerGroup.push(marker);
 			// marker.addTo(map)
-			
+
 		})
-		
+
 		_.each(markerGroup, function (marker) {
 			console.log(marker);
 			marker.addTo(map);
@@ -183,7 +208,7 @@
 	}
 
 	function showMarkers (rowToExpand) {
-		
+
 	}
 
 	function zoomend(event){
@@ -212,7 +237,7 @@
 
 	function clearGeoJson(){
 		map.removeLayer(geojson)
-		
+
 	}
 
 	function clearPins () {
@@ -233,7 +258,7 @@
 	// }
 
 
-		
+
 		// var geojson = L.geoJson(geojsonSample, {
 
 		// 	// style: function (feature) {
@@ -251,10 +276,10 @@
 		// 		layer.bindPopup(popupText);
 		// 	},
 
-			
+
 		// })
 
-		
+
 		// map.addLayer(geojson)
 
 		// .on("click", function(feature){ console.log('clicked' + feature.properties.cartodb_id)})
@@ -299,8 +324,8 @@
 			})
 
 		})
-		
-	
+
+
 
 	</script>
 </body>
