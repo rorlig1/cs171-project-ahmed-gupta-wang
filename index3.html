@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Analytics Home</title>
+    <link rel="stylesheet" type="text/css" href="css/grid.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/layout.css" media="screen" />
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="screen.css" />
+
+    <link rel="stylesheet" href="dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="dist/MarkerCluster.Default.css" />
+    <script src="./dist/leaflet.markercluster-src.js"></script>
+    <script src="js/d3.js"></script>
+    <script src="js/underscore.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+ 
+ 
+
+     <!--[if IE 6]><link rel="stylesheet" type="text/css" href="css/ie6.css" media="screen" /><![endif]-->
+    <!--[if IE 7]><link rel="stylesheet" type="text/css" href="css/ie.css" media="screen" /><![endif]-->
+    <!-- BEGIN: load jquery -->
+    <!-- END: load jquery -->
+    <!-- BEGIN: load jqplot -->
+    <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="js/jqPlot/excanvas.min.js"></script><![endif]-->
+       <script>
+  $(function() {
+    $( "#sliderfunny" ).slider({
+      value:0,
+      min: -1,
+      max: 1,
+      step: 0.5,
+      slide: function( event, ui ) {
+        $( "#funny" ).val( ui.value );
+      }
+    });
+    $( "#funny" ).val($( "#sliderfunny" ).slider( "value" ) );
+   
+    $( "#sliderhelpful" ).slider({
+      value:0,
+      min: -1,
+      max: 1,
+      step: 0.5,
+      slide: function( event, ui ) {
+        $( "#helpful" ).val( ui.value );
+      }
+    });
+    $( "#helpful" ).val($( "#sliderhelpful" ).slider( "value" ) );
+  
+    $( "#slidercool" ).slider({
+      value:0,
+      min: -1,
+      max: 1,
+      step: 0.5,
+      slide: function( event, ui ) {
+        $( "#cool" ).val( ui.value );
+      }
+    });
+    $( "#cool" ).val($( "#slidercool" ).slider( "value" ) );
+    
+  });
+
+  </script>
+        
+    <script src="js/restaurant_clusters2.js"></script>
+</head>
+<body
+    <div class="container_12">
+        <div class="grid_1" >
+        <div class="box round first">
+                <h1>Yelp Visualization</h1>
+            <div class="block">
+                <div id="map" style="width: 100%; height: 350px;"></div>
+                <p>
+                  <label for="funny">Funny:</label>
+                  <input type="text" id="funny" style="border:0; color:#f6931f; font-weight:bold;">
+                </p>
+                <div id="sliderfunny"></div>
+                <p>
+                  <label for="helpful">Helpful:</label>
+                  <input type="text" id="helpful" style="border:0; color:#f6931f; font-weight:bold;">
+                </p>
+                <div id="sliderhelpful"></div>
+                <p>
+                  <label for="cool">Cool:</label>
+                  <input type="text" id="cool" style="border:0; color:#f6931f; font-weight:bold;">
+                </p>
+                <div id="slidercool"></div>
+            </div>
+        </div>
+        </div>
+        <div class="grid_2">
+		<div class="box round first">
+		    	<!--<h2>CLUSTER With Tabs</h2>-->
+			<div class="block">
+            	</div class="row">
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary active" id="price">
+                      <input type="radio" name="options"> Price
+                    </label>
+                    <label class="btn btn-primary" id="category">
+                      <input type="radio" name="options"> Category
+                    </label>
+                    <label class="btn btn-primary" id="city">
+                      <input type="radio" name="options"> City
+                    </label>
+                  </div>
+                  </div>
+                <div id="clusterchart"></div>
+			</div>
+		</div>
+        </div>
+        <div class="grid_10">
+           
+            <div class="grid_3">
+            <div class="box round first">
+                    <h2>Review Distribution</h2>
+                <div class="block">
+                    <div id="chartdivPF" style="width: 100%; height: 350px;"></div>
+                </div>
+            </div>
+            </div>
+            <div class="grid_4">
+            <div class="box round first">
+                    <h2>Vote Distribution</h2>
+                <div class="block">
+                    <div id="chartdivPF" style="width: 100%; height: 350px;"></div>
+                </div>
+            </div>
+            </div>
+            <div class="grid_5" id="chart">
+            <div class="box round first">
+                    <h2>Heatmap</h2>
+                
+            </div>
+            </div>
+            
+            </div>
+        
+        
+    </div>
+    <div class="clear">
+    </div>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+         <script src="js/heatmap.js"></script>
+         <script src="js/map_cluster_1.js"></script>
+</body>
+</html>
