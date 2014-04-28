@@ -37,6 +37,21 @@
     line-height:30px;
 
 }
+.count-icon2 {
+    background:#FFFFFF;
+    opacity:0.9;
+    text-align:center;
+    color:#41AB5D;
+    vertical-align:middle;
+     /*  border:1px    solid #000;*/
+    border:1px    solid #41AB5D;
+    border-radius:20px;
+    line-height:30px;
+
+}
+.mouseover-popup{
+	opacity:0.9;
+}
 </style>
 
 
@@ -47,18 +62,34 @@
 	<script type="text/javascript">
 	//tile of the map....
 	var restaurantIcon = L.icon({
-    iconUrl: 'icon/restaurantmarker7.png',
+    iconUrl: 'icon/restaurantmarker13.png',
     iconSize: [55, 55],
-    opacity:0.6
+    opacity:0.6,
+    popupAnchor:  [ 0, -13]
     /*iconAnchor: [22, 94] */
     });
+    var restaurantIcon2 = L.icon({
+    iconUrl: 'icon/restaurantmarker11.png',
 
+    iconSize: [55, 55],
+    opacity:0.3,
+    popupAnchor:  [ 0, -23]
+    /*iconAnchor: [22, 94] */
+    });
+     var restaurantIcon3 = L.icon({
+    iconUrl: 'icon/restaurantmarker7.png',
+
+    iconSize: [55, 55],
+    opacity:0.3,
+    popupAnchor:  [ 0, -23]
+    /*iconAnchor: [22, 94] */
+    });
 
 var tiles = L.tileLayer('https://a.tiles.mapbox.com/v3/vieriw.i3f0efm1/{z}/{x}/{y}.png', {
 			maxZoom: 16,
 		//	attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 		}),
-	 
+
 		latlng = L.latLng( 33.592887216626245,  -112.0550537109375);
 
 	//main map object
@@ -79,15 +110,15 @@ var tiles = L.tileLayer('https://a.tiles.mapbox.com/v3/vieriw.i3f0efm1/{z}/{x}/{
 
 	var neighborhoodClusters
 	//customIcon for the map
-	var custIcon = L.divIcon({
-	            // specify a class name that we can refer to in styles, as we
-	            // do above.
-	            className: 'count-icon',
-	            // html here defines what goes in the div created for each marker
-	            html: "40",
-	            // and the marker width and height
-	            iconSize: [20, 20]
-      		})
+	// var custIcon = L.divIcon({
+	//             // specify a class name that we can refer to in styles, as we
+	//             // do above.
+	//             className: 'count-icon',
+	//             // html here defines what goes in the div created for each marker
+	//             html: "40",
+	//             // and the marker width and height
+	//             iconSize: [20, 20]
+ //      		})
 
 
 	function createClusters () {
@@ -142,6 +173,7 @@ var tiles = L.tileLayer('https://a.tiles.mapbox.com/v3/vieriw.i3f0efm1/{z}/{x}/{
 
 				console.log(row.properties.name + " lat:"  + row.g.location.lat + " lng:" + row.g.location.lng);
 				var latlng = new L.LatLng(row.g.centroid[1],  row.g.centroid[0]);
+
 				var icon  = L.divIcon({
 		            // specify a class name that we can refer to in styles, as we
 		            // do above.
@@ -149,18 +181,36 @@ var tiles = L.tileLayer('https://a.tiles.mapbox.com/v3/vieriw.i3f0efm1/{z}/{x}/{
 		            // html here defines what goes in the div created for each marker
 		            html: "" + markerLabel,
 		            // and the marker width and height
-		            iconSize: [30, 30]
-	        	}) 
+		            iconSize: [30, 30],
 
-	        	var marker = new MyCustomMarker(latlng, {icon: icon})
+		            popupAnchor:  [ 0, -10]
+	        	}) 
+                
+                var icon2  = L.divIcon({
+		            // specify a class name that we can refer to in styles, as we
+		            // do above.
+		            className: 'count-icon2',
+		            // html here defines what goes in the div created for each marker
+		            html: "" + markerLabel,
+		            // and the marker width and height
+		               iconSize: [30, 30]
+		         }) 
+
+	        	var marker = new MyCustomMarker(latlng, {icon: icon},{className: 'mouseover-popup'})
 	        						.on("click", function(e) {
 	        							rowToExpand = row;
 	        							clusterClick(e);
 	        						})
+                                    .on("mouseover",function(e) {
+	        						 this.setIcon(icon2)
+	        						})
+	        						.on("mouseout",function(e) {
+	        						 this.setIcon(icon)
+	        						})
 
-	        	marker.bindPopup("<p> " + row.properties.name + " </p> <br>" , {
+	        	marker.bindPopup("<p> " + row.properties.name + " </p> " , {
 	        		showOnMouseOver: true
-	        	});
+	        	} );
 
 	        						// .on("mouseover",clusterMouseOver)
 	        						// .on("mouseout", clusterMouseOut)
@@ -168,7 +218,7 @@ var tiles = L.tileLayer('https://a.tiles.mapbox.com/v3/vieriw.i3f0efm1/{z}/{x}/{
 				pins.push(marker);
 
 			}
-			
+
 		})
 
 		showPins();
@@ -206,13 +256,13 @@ var tiles = L.tileLayer('https://a.tiles.mapbox.com/v3/vieriw.i3f0efm1/{z}/{x}/{
 
 			var marker = new L.Marker(new L.LatLng(restaurant.latitude,  restaurant.longitude),
 									 {icon: restaurantIcon})
-									// .on("click", function(e) {
-	        // 							markerClicked(e);
-	        // 						})
-	        // 						.on("mouseover",markerMouseOver)
-	        // 						.on("mouseout", markerMouseOut)
+								.on("click",  markerClicked) 
+	       						.on("mouseover",markerMouseOver)
+	         					.on("mouseout", markerMouseOut)
 
-	        marker.bindPopup("<p> " + restaurant.name + " </p> <br>")				
+	        marker.bindPopup("<p> " + restaurant.name + " </p> ", {
+	        		showOnMouseOver: true
+	        	} );		
 			markerGroup.push(marker);
 			// marker.addTo(map)
 
@@ -246,22 +296,30 @@ var tiles = L.tileLayer('https://a.tiles.mapbox.com/v3/vieriw.i3f0efm1/{z}/{x}/{
 
 	}
 
+    var clicked;
+    var lastclicked;
 	function markerClicked (e) {
 		// body...
-
+	 
+		clicked=e._leaflet_id;
+        this.setIcon(restaurantIcon3)
 		console.log('markerMouseClicked');
 
 
 	}
 
 	function markerMouseOver (e) {
-		// body...
+		this.setIcon(restaurantIcon2)
 		console.log('markerMouseOver');
 
 	}
 
 	function markerMouseOut(e){
-
+		console.log(e)
+		//if (e._leaflet_id!=clicked){
+		this.setIcon(restaurantIcon)
+		//}
+        
 		console.log('markerMouseOut');
 	}
 
