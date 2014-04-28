@@ -48,6 +48,9 @@
 	//main map object
 	var map = L.map('map', {center: latlng, zoom: 10, layers: [tiles]});
 
+	map.on("zoomend", zoomend);
+
+
 	var pins = [];
 
 	var restaurantData;
@@ -56,6 +59,9 @@
 
 	var geojson;
 
+	var markerGroup = []
+
+	var neighborhoodClusters
 	//customIcon for the map
 	var custIcon = L.divIcon({
 	            // specify a class name that we can refer to in styles, as we
@@ -68,8 +74,8 @@
       		})
 
 
-	function createClusters (clusters) {
-		 geojson = L.geoJson(clusters, {
+	function createClusters () {
+		 geojson = L.geoJson(neighborhoodClusters, {
 			 pointToLayer: function (feature, latlng) {
 			 	console.log(latlng);
          		return L.marker(latlng).bindLabel( feature.properties.name, { noHide: true });
@@ -84,13 +90,9 @@
 
 		map.addLayer(geojson);
 
-		addMarkerLabels(clusters);
+		addMarkerLabels(neighborhoodClusters);
 
-		console.log(pins);
-
-		_.each(pins, function(pin){
-			pin.addTo(map);
-		})		
+			
 
 
 		// body...
@@ -130,6 +132,7 @@
 			pins.push(marker);
 		})
 		
+		showPins();
 		// map.on('click', mapClick);
 
 	}
@@ -138,32 +141,32 @@
 		console.log("marker clicked");
 		console.log(rowToExpand);
 
+		clearMarkers();
+		clearPins();
+		clearGeoJson();
+
 		var restaurantsInNeighborhood = _.filter(restaurantData, function(data){
 			return data.neighborhood == rowToExpand.properties.name;
 		})
 
 		console.log(restaurantsInNeighborhood);
-		map.removeLayer(geojson)
-		_.each(pins, function  (pin) {
-			map.removeLayer(pin);
-			// body...
-		})
+
+		
 
 		//add the markers now ... 
-		var markerGroup = []
 		_.each(restaurantsInNeighborhood, function(restaurant){
 			console.log("lat: " + restaurant.latitude + " long: " + restaurant.longitude);
 			var latLng = new L.LatLng(restaurant.latitude,  restaurant.longitude);
 			var marker = new L.Marker(new L.LatLng(restaurant.latitude,  restaurant.longitude));
 			markerGroup.push(marker);
-			marker.addTo(map)
+			// marker.addTo(map)
 			
 		})
 		
-		// _.each(markerGroup, function (marker) {
-		// 	console.log(marker);
-		// 	marker.addTo(map);
-		// })
+		_.each(markerGroup, function (marker) {
+			console.log(marker);
+			marker.addTo(map);
+		})
 		var group = new L.featureGroup(markerGroup);
 
 		map.fitBounds(group.getBounds());
@@ -183,7 +186,49 @@
 		
 	}
 
-	// function mapClick (e) {
+	function zoomend(event){
+		console.log(event.target._zoom);
+		var zoom = event.target._zoom;
+
+		if (zoom<=10) {
+			clearMarkers();
+			showGeoJSON();
+			showPins();
+		}
+	}
+
+	function showGeoJSON(){
+		map.addLayer(geojson);
+	}
+
+	function showPins () {
+		console.log(pins);
+
+		_.each(pins, function(pin){
+			pin.addTo(map);
+		})	
+		// body...
+	}
+
+	function clearGeoJson(){
+		map.removeLayer(geojson)
+		
+	}
+
+	function clearPins () {
+		_.each(pins, function  (pin) {
+			map.removeLayer(pin);
+		})	
+	}
+
+
+	function clearMarkers(){
+		_.each(markerGroup, function  (marker) {
+			map.removeLayer(marker);
+		})	
+	}
+
+		// function mapClick (e) {
 	// 	console.log(e.latlng);
 	// }
 
@@ -247,7 +292,8 @@
 			//load the other stuff...
 			d3.json('data_with_open/output_phoenix_all.json', function (error, data) {
 				restaurantData = data;
-				createClusters(clusters);
+				neighborhoodClusters = clusters;
+				createClusters();
 				// console.log(data);
 
 			})
