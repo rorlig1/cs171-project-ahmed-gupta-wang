@@ -876,7 +876,7 @@
               .domain([0, buckets - 1, d3.max(data, function (d) { return d.value; })])
               .range(colors);
 
-          var svg = d3.select("#chart").append("svg")
+          var svg = d3.select("#heatmap").append("svg")
               .attr("width", width + margin.left + margin.right)
               .attr("height", height + margin.top + margin.bottom)
               .append("g")
@@ -948,7 +948,7 @@
 
           legend.append("rect")
             .attr("x", function(d, i) { return legendElementWidth * i; })
-            .attr("y", height)
+            .attr("y", - 40)
             .attr("width", legendElementWidth)
             .attr("height", gridSize / 2)
             .style("fill", function(d, i) { return colors[i]; });
@@ -958,7 +958,7 @@
             //.text(function(d) { return "≥ " + Math.round(d); })
             .text(function(d) { return  Math.round(d); })
             .attr("x", function(d, i) { return legendElementWidth * i+5; })
-            .attr("y", height+13);
+            .attr("y", -40+13);
       
 
            var gridSize2=14;
