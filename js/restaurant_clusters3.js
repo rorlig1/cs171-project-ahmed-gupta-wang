@@ -19,9 +19,9 @@ d3.json('data_with_open/output_phoenix_30.json', function (error, data) {
 	console.log(_.unique(_.pluck(data, "category")).length);
 	console.log(data);
 	var width = 600, height = 600;
-//	var fill = d3.scale.ordinal().range(['#827d92','#827354','#523536','#72856a','#2a3285','#383435'])
-	var fill = d3.scale.category20()
-
+    var fill = d3.scale.ordinal().range(['#F7FCB9','#D9F0A3','#238443'])
+	//var fill = d3.scale.category20()
+    
 	var svg = d3.select("#chart").append("svg")
 		.attr("width", width)
 		.attr("height", height);
@@ -66,7 +66,7 @@ d3.json('data_with_open/output_phoenix_30.json', function (error, data) {
 		.attr("cx", function (d) { return d.x; })
 		.attr("cy", function (d) { return d.y; })
 		.attr("r", function (d) { return d.radius; })
-		.style("fill", function (d) { return fill( d.open); })
+		.style("fill", function (d) { return fill(d.open); })
 		// .style("fill", function (d) { return fill(d.open); })
 		.on("mouseover", function (d) { showPopover.call(this, d); })
 		.on("mouseout", function (d) { removePopovers(); })

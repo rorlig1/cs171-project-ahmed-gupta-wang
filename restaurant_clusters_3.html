@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Yelp Data Visualization - Bubble Charts </title>
-    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap2.css" rel="stylesheet">
     <style type="text/css">
       body {
         background-color: white;
@@ -16,28 +16,34 @@
         opacity: .8;
       }
       .btn-group {
-        margin-left: 330px;
+        margin-left: 360px;
+        text-align: center;
+        vertical-align:middle;
+        border:2px;
+        border-color: #fff;
       }
+      
       .label {
-        fill: grey;
+        fill:#808080;
         font-size: 10px;
       }
     </style>
 
   </head>
-  <body>
-    </div class="row">
+  <body class="row" style="background-color:#FFFFE5">
+   </div >
       <div class="btn-group" data-toggle="buttons">
-        <label class="btn btn-primary active" id="price">
+        <label class="btn btn-primary active" id="price"  >
           <input type="radio" name="options"> Price
         </label>
-        <label class="btn btn-primary" id="category">
+        <label class="btn btn-primary" id="category"  >
           <input type="radio" name="options"> Category
         </label>
-        <label class="btn btn-primary" id="city">
+        <label class="btn btn-primary" id="city"  >
           <input type="radio" name="options"> City
         </label>
       </div>
+     
     </div>
     <div id="chart"></div>
     <script src="js/d3.js"></script>
