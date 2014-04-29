@@ -46,7 +46,8 @@ var tiles = L.tileLayer('https://a.tiles.mapbox.com/v3/vieriw.i3f0efm1/{z}/{x}/{
 
 	var markerGroup = []
 
-	var neighborhoodClusters
+	var neighborhoodClusters;
+	var selectedRestaurant;
 	//customIcon for the map
 	// var custIcon = L.divIcon({
 	//             // specify a class name that we can refer to in styles, as we
@@ -180,21 +181,25 @@ var tiles = L.tileLayer('https://a.tiles.mapbox.com/v3/vieriw.i3f0efm1/{z}/{x}/{
 			return data.neighborhood == rowToExpand.properties.name;
 		})
 
-		console.log(restaurantsInNeighborhood);
+		console.log(restaurantsInNeighborhood.lengt);
 
 		markerGroup = [];
 
 		//add the markers now ... 
 		_.each(restaurantsInNeighborhood, function(restaurant){
 			console.log("lat: " + restaurant.latitude + " long: " + restaurant.longitude);
+			console.log(restaurant);
 			var latLng = new L.LatLng(restaurant.latitude,  restaurant.longitude);
 			var popupText = '<b>' + restaurant.name + '</b><br>'
 							+ '<b>' + restaurant.name + '</b><br>'
 							+ '<b>' + restaurant.name + '</b><br>';
-
+			var that = this;
 			var marker = new L.Marker(new L.LatLng(restaurant.latitude,  restaurant.longitude),
 									 {icon: restaurantIcon})
-								.on("click",  markerClicked) 
+								.on("click",  function(e){
+									selectedRestaurant = restaurant;
+									markerClicked(e, this);
+								}) 
 	       						.on("mouseover",markerMouseOver)
 	         					.on("mouseout", markerMouseOut)
 
@@ -240,11 +245,12 @@ var tiles = L.tileLayer('https://a.tiles.mapbox.com/v3/vieriw.i3f0efm1/{z}/{x}/{
 
     var clicked;
     var lastclicked;
-	function markerClicked (e) {
+	function markerClicked (e, self) {
 		// body...
 	 
 		clicked=e._leaflet_id;
-        this.setIcon(restaurantIcon3)
+        self.setIcon(restaurantIcon3)
+        update_restaurant_cluster(selectedRestaurant);
 		console.log('markerMouseClicked');
 
 
@@ -253,6 +259,7 @@ var tiles = L.tileLayer('https://a.tiles.mapbox.com/v3/vieriw.i3f0efm1/{z}/{x}/{
 	function markerMouseOver (e) {
 		this.setIcon(restaurantIcon2)
 		console.log('markerMouseOver');
+		// highlight_restaurant();
 
 	}
 
@@ -260,6 +267,7 @@ var tiles = L.tileLayer('https://a.tiles.mapbox.com/v3/vieriw.i3f0efm1/{z}/{x}/{
 		console.log(e)
 		//if (e._leaflet_id!=clicked){
 		this.setIcon(restaurantIcon)
+
 		//}
         
 		console.log('markerMouseOut');
@@ -275,6 +283,8 @@ var tiles = L.tileLayer('https://a.tiles.mapbox.com/v3/vieriw.i3f0efm1/{z}/{x}/{
 			showGeoJSON();
 			showPins();
 			$("#chart").empty();
+			$("#heatmap").empty();
+
 		}
 	}
 

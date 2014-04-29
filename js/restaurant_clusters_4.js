@@ -174,3 +174,11 @@ function draw_clusters (data) {
 		};
 	}
 };
+
+
+function update_restaurant_cluster(restaurant){
+	console.log("update_restaurant");
+	console.log(restaurant);
+	$("#heatmap").empty();
+	draw_heatmap(restaurant);
+}
