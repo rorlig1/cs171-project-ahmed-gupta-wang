@@ -18,11 +18,11 @@ d3.json('data_with_open/output_phoenix_30.json', function (error, data) {
 	})
 	console.log(_.unique(_.pluck(data, "category")).length);
 	console.log(data);
-	var width = 600, height = 600;
+	var width = 1000, height = 600;
 //	var fill = d3.scale.ordinal().range(['#827d92','#827354','#523536','#72856a','#2a3285','#383435'])
 	var fill = d3.scale.category20()
 
-	var svg = d3.select("#chart").append("svg")
+	var svg = d3.select("#clusterchart").append("svg")
 		.attr("width", width)
 		.attr("height", height);
 

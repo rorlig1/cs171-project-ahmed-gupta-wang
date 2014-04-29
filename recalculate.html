@@ -10,42 +10,88 @@
   <script>
   $(function() {
     $( "#sliderfunny" ).slider({
-      value:0,
-      min: -1,
-      max: 1,
+      value:1,
+      min: 0,
+      max: 2,
       step: 0.5,
       slide: function( event, ui ) {
         $( "#funny" ).val( "$" + ui.value );
       }
-    });
-    $( "#funny" ).val( "$" + $( "#sliderfunny" ).slider( "value" ) );
+    })
+    .on("slide", function(evt, value) {
+  console.log("Changed")
+});
+   
+
+    $( "#funny" ).val( $( "#sliderfunny" ).slider( "value" ) );
    
     $( "#sliderhelpful" ).slider({
-      value:0,
-      min: -1,
-      max: 1,
+      value:1,
+      min: 0,
+      max: 2,
       step: 0.5,
       slide: function( event, ui ) {
         $( "#helpful" ).val( "$" + ui.value );
       }
     });
-    $( "#helpful" ).val( "$" + $( "#sliderhelpful" ).slider( "value" ) );
+    $( "#helpful" ).val( $( "#sliderhelpful" ).slider( "value" ) );
   
     $( "#slidercool" ).slider({
-      value:0,
-      min: -1,
-      max: 1,
+      value:1,
+      min: 0,
+      max: 2,
       step: 0.5,
       slide: function( event, ui ) {
         $( "#cool" ).val( "$" + ui.value );
       }
     });
-    $( "#cool" ).val( "$" + $( "#slidercool" ).slider( "value" ) );
+    $( "#cool" ).val(  $( "#slidercool" ).slider( "value" ) );
     
   });
 
+    
+
     d3.json("data_with_open/output_phoenix_30.json", function(data){
            console.log(data)
+           for ( i in data){
+            console.log(data[i])
+            if(data[i].review_count){
+            console.log(data[i].review_count)
+            var rc = data[i].review_count
+            for(j =0;  j < rc; j++)
+            {
+              if(data[i].reviews[j]){
+                var stars = data[i].reviews[j].stars
+              console.log("RR:", data[i].reviews[j].stars)
+               var funny_count = data[i].reviews[j].votes.funny
+              console.log("Funny:", data[i].reviews[j].votes.funny)
+              var cool_count = data[i].reviews[j].votes.cool
+              console.log("Cool:", data[i].reviews[j].votes.cool)
+              var useful_count = data[i].reviews[j].votes.useful
+              console.log("Useful:", data[i].reviews[j].votes.useful)
+              var original_score = stars * funny_count + stars * cool_count + stars * useful_count;
+              console.log("original_score", original_score)
+              //funvalue= 1;
+              //helpfulvalue = 1; 
+              //coolvalue = 1;
+              var val = $('#sliderfunny').slider("option", "value");
+              var funvalue = $( "#sliderfunny" ).slider("option", "value");
+              var helpfulvalue = $( "#sliderhelpful" ).slider("option", "value");
+              var coolvalue = $( "#slidercool" ).slider("option", "value");
+              console.log(val, funvalue, helpfulvalue, coolvalue)
+              if(funvalue == 0 && helpfulvalue == 0 && coolvalue == 0){
+                var calculated_score = original_score
+              }else{
+              var calculated_score = stars * funny_count * funvalue
+                                   + stars * cool_count *  helpfulvalue
+                                   + stars * useful_count * coolvalue;
+              
+            }
+            console.log("calculated_score", calculated_score)
+            }
+            }
+          }
+           }
 });
 
 
