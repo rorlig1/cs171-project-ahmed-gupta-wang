@@ -1,7 +1,7 @@
 //tile of the map....
 	var restaurantIcon = L.icon({
     iconUrl: 'icon/restaurantmarker13.png',
-    iconSize: [55, 55],
+    iconSize: [45, 45],
     opacity:0.6,
     popupAnchor:  [ 0, -13]
     /*iconAnchor: [22, 94] */
@@ -9,7 +9,7 @@
     var restaurantIcon2 = L.icon({
     iconUrl: 'icon/restaurantmarker11.png',
 
-    iconSize: [55, 55],
+    iconSize: [45, 45],
     opacity:0.3,
     popupAnchor:  [ 0, -23]
     /*iconAnchor: [22, 94] */
@@ -17,7 +17,7 @@
      var restaurantIcon3 = L.icon({
     iconUrl: 'icon/restaurantmarker7.png',
 
-    iconSize: [55, 55],
+    iconSize: [45, 45],
     opacity:0.3,
     popupAnchor:  [ 0, -23]
     /*iconAnchor: [22, 94] */
@@ -28,7 +28,7 @@ var tiles = L.tileLayer('https://a.tiles.mapbox.com/v3/vieriw.i3f0efm1/{z}/{x}/{
 		//	attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 		}),
 
-		latlng = L.latLng( 33.592887216626245,  -112.0550537109375);
+		latlng = L.latLng( 33.532887216626245,  -112.1050537109375);
 
 	//main map object
 	var map = L.map('map', {center: latlng, zoom: 10, layers: [tiles]});

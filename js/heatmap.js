@@ -925,7 +925,7 @@
       // }
 
       //  })
-        .style("stroke", "#ececec") 
+        .style("stroke", "#e3e3e3") 
          //.style("stroke", "white") 
         .style("stroke-width", 0.2);
 
@@ -933,8 +933,8 @@
         //.style("fill", function(d) { return colorScale(d.value); });
       .style("fill", function(d) { 
        if (d.hour<4 || d.hour>20 )  {
-          return "#fcfcfc" 
-          return "#f3fcf0"  
+          return "#f4f4f4" 
+          return "#f4f4f4"  
       } else {
          return colorScale(d.value*1)
       }  

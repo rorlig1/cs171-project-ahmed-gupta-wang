@@ -21,14 +21,19 @@ function draw_clusters (data) {
 	var width = 600, height = 600;
 //	var fill = d3.scale.ordinal().range(['#827d92','#827354','#523536','#72856a','#2a3285','#383435'])
     var fill = d3.scale.ordinal().range(['#F7FCB9','#D9F0A3','#238443'])
+    
 
+
+
+
+    
 	var svg = d3.select("#chart").append("svg")
 		.attr("width", width)
 		.attr("height", height);
 
 	_.each(data, function (elem) {
 //		console.log(elem);
-		elem.radius = +elem.stars * 4;
+		elem.radius = +elem.stars * 5.6;
 		elem.x = _.random(0, width);
 		elem.y = _.random(0, height);
 	})
@@ -66,10 +71,10 @@ function draw_clusters (data) {
 		.attr("cx", function (d) { return d.x; })
 		.attr("cy", function (d) { return d.y; })
 		.attr("r", function (d) { return d.radius; })
-		.style("fill", function (d) { return fill( d.open); })
+		.style("fill", function (d) { return fill( d.open);})
 		// .style("fill", function (d) { return fill(d.open); })
 		.on("mouseover", function (d) { showPopover.call(this, d); })
-		.on("mouseout", function (d) { removePopovers(); })
+		.on("mouseout", function (d) { removePopovers(); })		
 		.on("click", function(d) {clickPopover.call(this,d)})
 
 	var force = d3.layout.force()
