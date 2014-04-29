@@ -66,7 +66,7 @@ d3.json('data_with_open/output_phoenix_30.json', function (error, data) {
 		.attr("cx", function (d) { return d.x; })
 		.attr("cy", function (d) { return d.y; })
 		.attr("r", function (d) { return d.radius; })
-		.style("fill", function (d) { return fill( d.open); })
+		.style("fill", function (d) { return fill(d.open); })
 		// .style("fill", function (d) { return fill(d.open); })
 		.on("mouseover", function (d) { showPopover.call(this, d); })
 		.on("mouseout", function (d) { removePopovers(); })
