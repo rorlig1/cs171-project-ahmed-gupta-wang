@@ -91,8 +91,9 @@ function draw_clusters (data) {
 
 		 	d3.select(this).style("opacity", 0.5);
 
-            div.transition()        
-                .duration(200)      
+            div
+            // .transition()        
+                // .duration(200)      
                 .style("opacity", .9);      
             // div .html(formatTime(d.date) + "<br/>"  + d.close)  
              div.html(d.name)
@@ -193,7 +194,9 @@ function draw_clusters (data) {
 		});
 		$(this).popover('show')
 	}
+	
 	var selectedBubble, prevBubble, selectedDiv, prevDiv;
+
 	function clickPopover (d) {
 		//console.log("clickPopover");
 		prevBubble = selectedBubble;
@@ -201,7 +204,8 @@ function draw_clusters (data) {
 		selectedDiv = this;
 		selectedBubble = d;
 		console.log(d);
-		updateHeatmap(d);
+		$("#heatmap").empty();
+		draw_heatmap(d);
 		d3.select(this).style("fill", fill(2));
 		if (prevDiv!=undefined) {
 			d3.select(prevDiv).style("fill", function(d){ if (prevBubble.open) { return fill(1);} else {return fill(0);}})
@@ -238,20 +242,72 @@ function draw_clusters (data) {
 			});
 		};
 	}
+
+
+	 var legend = svg.append("svg")
+			       .attr("class", "legend");
+
+    legend.append("circle")
+    	.attr("cx", function (d) { return 100; })
+		.attr("cy", function (d) { return height-120})
+		.attr("r", function (d) { return 20; })
+    	.style("fill", function(d, i) { return fill(0) });
+
+    legend.append("text")
+      .attr("class", "mono")
+      //.text(function(d) { return "≥ " + Math.round(d); })
+      .text(function(d) { return "Closed"})
+      .attr("x", function(d, i) { return 100 + 30 })
+      .attr("y", height-115);
+
+     legend.append("circle")
+    	.attr("cx", function (d) { return 100; })
+		.attr("cy", function (d) { return height-75})
+		.attr("r", function (d) { return 20; })
+    	.style("fill", function(d, i) { return fill(1) });
+
+    legend.append("text")
+      .attr("class", "mono")
+      .text(function(d) { return "Open"})
+      .attr("x", function(d, i) { return 100 + 30 })
+      .attr("y", height-70);
+
+    legend.append("circle")
+    	.attr("cx", function (d) { return 100; })
+		.attr("cy", function (d) { return height-30})
+		.attr("r", function (d) { return 20; })
+    	.style("fill", function(d, i) { return fill(2) });
+
+    legend.append("text")
+      .attr("class", "mono")
+      .text(function(d) { return "Selected"})
+      .attr("x", function(d, i) { return 100 + 30 })
+      .attr("y", height-25);
+
 };
 
 
-
+function update_clicked_bubble(restaurant){
+	//todo this...
+}
 function update_restaurant_cluster(restaurant){
-	// console.log("update_restaurant");
-	// console.log(restaurant);
+	console.log("update_restaurant");
+	console.log(restaurant);
+	// clickPopover(restaurant);
+	update_clicked_bubble()
 	$("#heatmap").empty();
 	draw_heatmap(restaurant);
 }
 
 function updateRestinfo(d){
 	Restinfo=d;
- console.log(Restinfo[0].recalculate); 
-  circles.attr("r", function (d) {console.log(d.recalculate); 
+    //console.log(Restinfo[0].recalculate); 
+     circles
+            // .transition()        
+            // .duration(function(d, i) { return i  * 200; })  
+            //.delay()    
+           // .style("opacity", 0)
+            .attr("r", function (d) {//console.log(d.recalculate); 
   	return d.recalculate*5;})
+      
 }

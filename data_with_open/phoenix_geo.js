@@ -2040,7 +2040,7 @@ var geojsonSample =
         "created_at": "2013-02-28T01:01:15.554Z",
         "cartodb_id": 39,
         "name": "Camelback East",
-        "count": 183,
+        "count": 117,
         "updated_at": "2013-02-28T01:01:15.796Z"
       }
     },
@@ -2917,7 +2917,7 @@ var geojsonSample =
         "created_at": "2013-02-28T01:01:15.554Z",
         "cartodb_id": 57,
         "name": "South Mountain",
-        "count": 19,
+        "count": 12,
         "updated_at": "2013-02-28T01:01:15.796Z"
       }
     },
@@ -3538,7 +3538,7 @@ var geojsonSample =
         "created_at": "2013-02-28T01:01:15.554Z",
         "cartodb_id": 63,
         "name": "Estrella",
-        "count":2,
+        "count":1,
         "updated_at": "2013-02-28T01:01:15.796Z"
       }
     },
@@ -4479,7 +4479,7 @@ var geojsonSample =
         "created_at": "2013-02-28T01:01:15.554Z",
         "cartodb_id": 82,
         "name": "North Mountain",
-        "count": 71,
+        "count": 42,
         "updated_at": "2013-02-28T01:01:15.796Z"
       }
     },
@@ -4928,7 +4928,7 @@ var geojsonSample =
         "created_at": "2013-02-28T01:01:15.554Z",
         "cartodb_id": 107,
         "name": "Alhambra",
-        "count": 52,
+        "count": 25,
         "updated_at": "2013-02-28T01:01:15.796Z"
       }
     },
@@ -6545,7 +6545,7 @@ var geojsonSample =
         "created_at": "2013-02-28T01:01:15.554Z",
         "cartodb_id": 114,
         "name": "Maryvale",
-        "count": 16,
+        "count": 7,
         "updated_at": "2013-02-28T01:01:15.796Z"
       }
     },
@@ -7014,7 +7014,7 @@ var geojsonSample =
         "created_at": "2013-02-28T01:01:15.554Z",
         "cartodb_id": 125,
         "name": "North Gateway",
-        "count":5,
+        "count":3,
         "updated_at": "2013-02-28T01:01:15.796Z"
       }
     },
@@ -7515,7 +7515,7 @@ var geojsonSample =
         "created_at": "2013-02-28T01:01:15.554Z",
         "cartodb_id": 180,
         "name": "Desert View",
-        "count":9,
+        "count":5,
         "updated_at": "2013-02-28T01:01:15.796Z"
       }
     },
@@ -8298,7 +8298,7 @@ var geojsonSample =
         "created_at": "2013-02-28T01:01:15.554Z",
         "cartodb_id": 181,
         "name": "Ahwatukee Foothills",
-        "count":26,
+        "count":20,
         "updated_at": "2013-02-28T01:01:15.796Z"
       }
     },
@@ -8699,7 +8699,7 @@ var geojsonSample =
         "created_at": "2013-02-28T01:01:15.554Z",
         "cartodb_id": 191,
         "name": "Central City",
-        "count":131,
+        "count":87,
         "updated_at": "2013-02-28T01:01:15.796Z"
       }
     },
@@ -9232,7 +9232,7 @@ var geojsonSample =
         "created_at": "2013-02-28T01:01:15.554Z",
         "cartodb_id": 194,
         "name": "Paradise Valley",
-        "count": 41,
+        "count": 27,
         "updated_at": "2013-02-28T01:01:15.796Z"
       }
     },
@@ -9981,7 +9981,7 @@ var geojsonSample =
         "created_at": "2013-02-28T01:01:15.554Z",
         "cartodb_id": 208,
         "name": "Deer Valley",
-        "count": 47,
+        "count": 22,
         "updated_at": "2013-02-28T01:01:15.796Z"
       }
     },
@@ -10193,7 +10193,7 @@ var geojsonSample =
       "properties": {
         "created_at": "2013-02-28T01:01:15.554Z",
         "cartodb_id": 215,
-        "count": 75,
+        "count": 45,
         "name": "Encanto",
         "updated_at": "2013-02-28T01:01:15.796Z"
       }
