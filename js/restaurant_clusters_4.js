@@ -234,6 +234,48 @@ function draw_clusters (data) {
 			});
 		};
 	}
+
+
+	 var legend = svg.append("svg")
+			       .attr("class", "legend");
+
+    legend.append("circle")
+    	.attr("cx", function (d) { return 100; })
+		.attr("cy", function (d) { return height-120})
+		.attr("r", function (d) { return 20; })
+    	.style("fill", function(d, i) { return fill(0) });
+
+    legend.append("text")
+      .attr("class", "mono")
+      //.text(function(d) { return "≥ " + Math.round(d); })
+      .text(function(d) { return "Closed"})
+      .attr("x", function(d, i) { return 100 + 30 })
+      .attr("y", height-115);
+
+     legend.append("circle")
+    	.attr("cx", function (d) { return 100; })
+		.attr("cy", function (d) { return height-75})
+		.attr("r", function (d) { return 20; })
+    	.style("fill", function(d, i) { return fill(1) });
+
+    legend.append("text")
+      .attr("class", "mono")
+      .text(function(d) { return "Open"})
+      .attr("x", function(d, i) { return 100 + 30 })
+      .attr("y", height-70);
+
+    legend.append("circle")
+    	.attr("cx", function (d) { return 100; })
+		.attr("cy", function (d) { return height-30})
+		.attr("r", function (d) { return 20; })
+    	.style("fill", function(d, i) { return fill(2) });
+
+    legend.append("text")
+      .attr("class", "mono")
+      .text(function(d) { return "Selected"})
+      .attr("x", function(d, i) { return 100 + 30 })
+      .attr("y", height-25);
+
 };
 
 
