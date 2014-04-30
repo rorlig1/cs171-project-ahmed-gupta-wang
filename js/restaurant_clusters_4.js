@@ -29,7 +29,7 @@ function draw_clusters (data) {
 
 
      var div = d3.select("#chart").append("div")   
-    .attr("class", "tooltip")               
+    .attr("class", "tooltipR")               
     .style("opacity", 0.0);
 
     
