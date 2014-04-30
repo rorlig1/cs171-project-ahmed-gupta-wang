@@ -205,6 +205,10 @@ function draw_clusters (data) {
 	}
 };
 
+$(".btn-group > .btn").click(function(){
+    $(".btn-group > .btn").removeClass("active");
+    $(this).addClass("active");
+});
 
 function update_restaurant_cluster(restaurant){
 	console.log("update_restaurant");
