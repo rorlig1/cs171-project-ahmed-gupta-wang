@@ -1004,3 +1004,76 @@
      
       
 }
+
+function draw_barchart(data){
+  console.log("draw_barchart")
+  console.log(data);
+  reviewMap =  _.range(5).map(function(){return 0;})
+  voteMap = _.range(3).map(function ()  { return 0; })
+
+  _.each(data.reviews, function(d){
+    reviewMap[d.stars-1]++;
+    voteMap[0]+= d.votes.cool;
+    voteMap[1]+= d.votes.funny;
+    voteMap[2]+= d.votes.useful;
+  })
+
+  console.log(voteMap);
+
+
+  var height = 100;
+
+  var y = d3.scale.linear().domain([5,0])
+    .range([5, 0]);
+  
+  // console.log(reviewMap);
+  //y-axis
+  // var yAxis = d3.svg.axis()
+  //   .scale(y)
+  //   .orient("left")
+  //   .tickValues([0,1,2,3,4])
+
+ var barchart =  d3.select("#barchart")
+  .selectAll("div")
+    .data(reviewMap)
+  .enter().append("div")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+    .style("width", function(d) { return d * 5 + "px"; })
+    .text(function(d) { return d; });
+
+// barchart.append("g")
+//   .attr("class", "y axis")
+//   .call(yAxis);
+  
+  ///make donut chart....
+
+  var radius=200;
+
+var arc = d3.svg.arc()
+    .outerRadius(radius - 10)
+    .innerRadius(radius - 70);
+
+  var pie = d3.layout.pie()
+    .sort(null);
+
+  var g = d3.select("#donutchart").selectAll(".arc")
+      .data(pie(voteMap))
+    .enter().append("g")
+      .attr("class", "arc");
+
+  g.append("path")
+      .attr("d", arc)
+      .style("fill", function(d) { return "#D9F0A3" });
+
+
+  // var arc = d3.svg.arc()
+  //   .innerRadius(radius-70)
+  //   .outerRadius(radius-10);
+
+  // var g = d3.select("#donutchart").selectAll("path")
+  //   .data(pie(voteMap))
+  // .enter().append("path")
+  //   .attr("fill", function(d, i) { return "#D9F0A3"; })
+  //   .attr("d", arc);
+
+}

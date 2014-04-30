@@ -197,7 +197,9 @@ function draw_clusters (data) {
 		selectedBubble = d;
 		console.log(d);
 		$("#heatmap").empty();
+		$("#barchart").empty();
 		draw_heatmap(d);
+		draw_barchart(d)
 		d3.select(this).style("fill", fill(2));
 		if (prevDiv!=undefined) {
 			d3.select(prevDiv).style("fill", function(d){ if (prevBubble.open) { return fill(1);} else {return fill(0);}})
@@ -289,4 +291,5 @@ function update_restaurant_cluster(restaurant){
 	update_clicked_bubble()
 	$("#heatmap").empty();
 	draw_heatmap(restaurant);
+	draw_barchart(restaurant);
 }

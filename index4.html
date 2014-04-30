@@ -193,6 +193,17 @@
               margin-left:20px;
             }
 
+            /* barchart */
+            .barchart div {
+              font: 10px sans-serif;
+              background-color: #238443;
+              text-align: right;
+              padding: 3px;
+              margin: 1px;
+              color: white;
+            }
+
+
 
         </style>
     </head>
@@ -262,11 +273,17 @@
         </div>
        
   </div>
-  <div class="row-fluid" style="background-color:#fff ; width:1320px; ; height:250px ;" ">
-  <div class="span4">
+  <div class="row-fluid" style="background-color:#fff ; width:1320px; ; height:250px ;">
+  <div class="span2" style="margin-left:20px; margin-top: 30px">
     <!-- if we do the review recalculation we do it here -->
+    <p> Review Distribution</p>
+    <div id="barchart" class="barchart"></div>
   </div>
-  <div class="span8" >
+  <div class="span2" style="margin-left:20px; margin-top: 30px; height: 200px">
+      <p> Vote Distribution</p>
+    <div id="donutchart" class="donutchart" style="margin-left:20px; margin-top: 30px; height: 200px"></div>
+  </div>
+  <div class="span7" >
         <div id = "heatmap" ;></div>
   </div>
   </div>
