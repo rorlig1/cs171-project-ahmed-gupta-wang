@@ -109,9 +109,15 @@ function draw_clusters (data) {
 
 	draw('price');
 
-	$( ".btn" ).click(function() {
-		draw(this.id);
+	$(".btn-group > .btn").click(function(){
+	    $(".btn-group > .btn").removeClass("active");
+	    $(this.id).addClass("active");
+	    draw(this.id);
 	});
+
+	// $( ".btn" ).click(function() {
+		
+	// });
 
 	function draw (varname) {
 		console.log(varname);
@@ -205,10 +211,7 @@ function draw_clusters (data) {
 	}
 };
 
-$(".btn-group > .btn").click(function(){
-    $(".btn-group > .btn").removeClass("active");
-    $(this).addClass("active");
-});
+
 
 function update_restaurant_cluster(restaurant){
 	console.log("update_restaurant");
