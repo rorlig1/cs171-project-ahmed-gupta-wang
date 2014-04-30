@@ -109,7 +109,8 @@ function draw_clusters (data) {
              
          })	
 		.on("click", function(d) {
-			clickPopover.call(this,d)}
+			clickPopover.call(this,d)
+		}
 			)
 
 	var force = d3.layout.force()
@@ -184,9 +185,19 @@ function draw_clusters (data) {
 		});
 		$(this).popover('show')
 	}
-
+	var selectedBubble, prevBubble, selectedDiv, prevDiv;
 	function clickPopover (d) {
+		console.log("clickPopover");
+		prevBubble = selectedBubble;
+		prevDiv = selectedDiv;
+		selectedDiv = this;
+		selectedBubble = d;
+		console.log(d);
 		updateHeatmap(d);
+		d3.select(this).style("fill", fill(2));
+		if (prevDiv!=undefined) {
+			d3.select(prevDiv).style("fill", function(d){ if (prevBubble.open) { return fill(1);} else {return fill(0);}})
+		}
 	}
 
 	function updateHeatmap(d) {
