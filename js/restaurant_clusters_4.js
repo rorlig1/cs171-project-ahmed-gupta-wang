@@ -20,8 +20,8 @@ function draw_clusters (data) {
 	console.log(data);
 	var width = 600, height = 600;
 //	var fill = d3.scale.ordinal().range(['#827d92','#827354','#523536','#72856a','#2a3285','#383435'])
-    var fill = d3.scale.ordinal().range(['#F7FCB9','#D9F0A3','#238443'])
-    
+  //  var fill = d3.scale.ordinal().range(['#F7FCB9','#D9F0A3','#238443'])
+    var fill = d3.scale.ordinal().range(['#f1f8a0','#D9F0A3','#238443'])
 
 
 

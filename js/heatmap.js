@@ -836,11 +836,11 @@
 "day": 6 
 }
 ]
+  
 
-
-  var margin = { top: 50, right: 0, bottom: 100, left: 100 },
-    width = 760 - margin.left - margin.right,
-    height = 300 - margin.top - margin.bottom,
+  var margin = { top: 70, right: 0, bottom: 100, left: 100 },
+    width = 860 - margin.left - margin.right,
+    height = 330 - margin.top - margin.bottom,
     gridSize = Math.floor(width / 24),
     gridSizeW= Math.floor(width / 24),
     gridSizeH= Math.floor(height /7),
@@ -872,17 +872,43 @@
       }
       data = array1
      
+     
+
 
     var colorScale = d3.scale.quantile()
         .domain([0, buckets - 1, d3.max(data, function (d) { return d.value; })])
         .range(colors);
+    
 
-    var svg = d3.select("#heatmap").append("svg")
+    var svg= d3.select("#heatmap").append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    
+        svg.append("text")
+        .attr("x", -60)             
+        .attr("y",  -35)
+        .attr("text-anchor", "left")  
+        .style("font-size", "18px")  
+        .style("font-family","arial") 
+        .text("Checkin Times");
+         
+         svg.append("text")
+        .attr("x", 600)             
+        .attr("y",  -35)
+        .attr("text-anchor", "left")  
+        .style("font-size", "18px")  
+        .style("font-family","arial")  
+        .text("Closed");
 
+         svg.append("rect")
+          .attr("x", 670)
+         .attr("y", -50)
+         .attr("width", legendElementWidth)
+         .attr("height", gridSize / 2)
+          .style("fill", "#f4f4f4") 
+         //.style("fill", "red") 
     var dayLabels = svg.selectAll(".dayLabel")
         .data(days)
         .enter().append("text")
@@ -941,15 +967,17 @@
     });
 
     heatMap.append("title").text(function(d) { return d.value; });
-        
+
+
+
     var legend = svg.selectAll(".legend")
         .data([0].concat(colorScale.quantiles()), function(d) { return d; })
         .enter().append("g")
         .attr("class", "legend");
 
     legend.append("rect")
-      .attr("x", function(d, i) { return legendElementWidth * i; })
-      .attr("y", - 40)
+      .attr("x", function(d, i) { return legendElementWidth * i+80; })
+      .attr("y", - 50)
       .attr("width", legendElementWidth)
       .attr("height", gridSize / 2)
       .style("fill", function(d, i) { return colors[i]; });
@@ -958,8 +986,17 @@
       .attr("class", "mono")
       //.text(function(d) { return "≥ " + Math.round(d); })
       .text(function(d) { return  Math.round(d); })
-      .attr("x", function(d, i) { return legendElementWidth * i+5; })
-      .attr("y", -40+13);
+      .attr("x", function(d, i) { return legendElementWidth * i+5+80; })
+      .attr("y", -50+13);
+      
+
+      // var closed=svg.selectAll(".closed")
+      // .append("rect")
+      // .attr("x", 50 )
+      // .attr("y", - 40)
+      // .attr("width", legendElementWidth)
+      // .attr("height", gridSize / 2)
+      // .style("fill", "#f4f4f4");
 
 
      var gridSize2=14;
