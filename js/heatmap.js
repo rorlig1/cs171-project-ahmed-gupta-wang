@@ -836,7 +836,10 @@
 "day": 6 
 }
 ]
-  
+
+
+var fill = d3.scale.ordinal().range(['#f1f8a0','#D9F0A3','#238443']).domain([0,1,2])
+
 
   var margin = { top: 70, right: 0, bottom: 0, left: 100 },
     width = 860 - margin.left - margin.right,
@@ -1020,6 +1023,8 @@ function draw_barchart(data){
 
   console.log(voteMap);
 
+  voteLabels = ["Cool", "Funny", "Helpful"];
+
 
   var height = 100;
 
@@ -1041,29 +1046,74 @@ function draw_barchart(data){
     .style("width", function(d) { return d * 5 + "px"; })
     .text(function(d) { return d; });
 
+
+var dataset = {
+  apples: [53245, 28479, 19697, 24037, 40245],
+};
+
+var width = 100,
+    height = 100,
+    radius = Math.min(width, height) / 2;
+
+var color = d3.scale.category20();
+
+var pie = d3.layout.pie()
+    .sort(null);
+
+var arc = d3.svg.arc()
+    .innerRadius(radius - 40)
+    .outerRadius(radius - 20);
+
+var svg = d3.select("#donutchart").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+var g = svg.selectAll("path")
+    .data(pie(voteMap))
+  .enter()
+
+
+
+  g.append("path").attr("fill", function(d, i) { return fill(i); })
+    .attr("d", arc);
+
+ g.append("text")
+      .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+      .attr("dy", ".35em")
+      .style("text-anchor", "middle")
+      .text(function(d,i) { return voteLabels[i]});
+
 // barchart.append("g")
 //   .attr("class", "y axis")
 //   .call(yAxis);
   
   ///make donut chart....
 
-  var radius=200;
+//   var radius=100;
 
-var arc = d3.svg.arc()
-    .outerRadius(radius - 10)
-    .innerRadius(radius - 70);
+//   var apples = [53245, 28479, 19697, 24037, 40245];
 
-  var pie = d3.layout.pie()
-    .sort(null);
 
-  var g = d3.select("#donutchart").selectAll(".arc")
-      .data(pie(voteMap))
-    .enter().append("g")
-      .attr("class", "arc");
+//   var color = d3.scale.category20();
 
-  g.append("path")
-      .attr("d", arc)
-      .style("fill", function(d) { return "#D9F0A3" });
+
+// var arc = d3.svg.arc()
+//     .outerRadius(radius - 5)
+//     .innerRadius(radius - 35);
+
+//   var pie = d3.layout.pie();
+
+//   var g = d3.select("#donutchart").selectAll(".arc")
+//       .data(pie(apples))
+//     .enter().append("g")
+//       .attr("class", "arc");
+
+//   g.append("path")
+//       .attr("d", arc)
+//       .style("fill", function(d,i) { return color(i) })
+//       .attr("d", arc);
 
 
   // var arc = d3.svg.arc()

@@ -207,6 +207,8 @@ function draw_clusters (data) {
 		console.log(d);
 		$("#heatmap").empty();
 		$("#barchart").empty();
+		$("#donutchart").empty();
+		
 		draw_heatmap(d);
 		draw_barchart(d)
 		d3.select(this).style("fill", fill(2));
