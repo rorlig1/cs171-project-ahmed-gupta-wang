@@ -1081,7 +1081,8 @@ var g = svg.selectAll("path")
 
  g.append("text")
       .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
-      .attr("dy", ".35em")
+      .attr("dy", ".3em")
+      // .attr("dx", "1em")
       .style("text-anchor", "middle")
       .text(function(d,i) { return voteLabels[i]});
 
