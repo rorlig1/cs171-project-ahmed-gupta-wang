@@ -25,7 +25,7 @@ function draw_clusters (data) {
 	var width = 860, height = 680;
 //	var fill = d3.scale.ordinal().range(['#827d92','#827354','#523536','#72856a','#2a3285','#383435'])
   //  var fill = d3.scale.ordinal().range(['#F7FCB9','#D9F0A3','#238443'])
-    var fill = d3.scale.ordinal().range(['#f1f8a0','#D9F0A3','#238443'])
+    var fill = d3.scale.ordinal().range(['#f1f8a0','#D9F0A3','#238443']).domain([0,1,2])
 
 
      var div = d3.select("#chart").append("div")   
@@ -78,8 +78,8 @@ function draw_clusters (data) {
 		.attr("cx", function (d) { return d.x; })
 		.attr("cy", function (d) { return d.y; })
 		.attr("r", function (d) { return d.radius; })
-		.style("fill", function (d) { return fill( d.open);})
-		// .style("fill", function (d) { return fill(d.open); })
+		.style("fill", function (d) {if (d.open) return fill(1); else return fill(0)})
+		// .style("fill", function (d) { return fill(); })
 		// .on("mouseover", function (d) { showPopover.call(this, d); })
 		// .on("mouseout", function (d) { removePopovers(); })	
 		 .on("mouseover", function(d) {    
