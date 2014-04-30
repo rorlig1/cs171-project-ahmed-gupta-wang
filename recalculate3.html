@@ -8,12 +8,12 @@
   <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
   <script src="http://d3js.org/d3.v3.min.js"></script>
   <style>
-     #sliderCool, #sliderFunny, #sliderUseful {
+            #sliderCool, #sliderFunny, #sliderUseful {
              /*float: left;
              clear: left;*/
-             width: 300px;
+             width: 150px;
              height:5px;
-             /*margin: 15px;    */        
+            margin: 15px;          
              }
 
              #sliderCool .ui-slider-handle { 
@@ -31,6 +31,9 @@
               border-color: #fff; 
 
             }
+           .tick {
+              font: normal 14px arial
+            }
    </style>
   <script>
     $(function() {
@@ -45,6 +48,7 @@
     })
     .on("slide", function(evt, value) {
    console.log("Changed")
+   updateReview()
   });
    
     $( "#Cool" ).val( $( "#sliderCool" ).slider( "value" ) );
@@ -57,7 +61,11 @@
       slide: function( event, ui ) {
         $( "#Funny" ).val(  ui.value );
       }
-    });
+    }) .on("slide", function(evt, value) {
+   console.log("Changed")
+   updateReview()
+  });
+
     $( "#Funny" ).val( $( "#sliderFunny" ).slider( "value" ) );
   
     $( "#sliderUseful" ).slider({
@@ -68,12 +76,15 @@
       slide: function( event, ui ) {
         $( "#Useful" ).val( ui.value );
       }
-    });
+    }) .on("slide", function(evt, value) {
+   console.log("Changed")
+   updateReview()
+  });
     $( "#Useful" ).val(  $( "#sliderUseful" ).slider( "value" ) );
     
   });
 
-    
+   function updateReview(){  
 
     d3.json("data_with_open/output_phoenix_30.json", function(data){
            console.log(data)
@@ -85,10 +96,8 @@
             console.log(data[i] )
             var rc = data[i].review_count
             
-            var recalculate=[];
-            for (var c=0;c<=2;c+=0.5){
-             for (var  f=0;f<=2;f+=0.5){ 
-                for (var u=0;u<=2;u+=0.5){
+            var recalculate ;
+      
               
               var totalscore=0;
               var totalnum=0;   
@@ -100,44 +109,50 @@
               var cool_count = data[i].reviews[j].votes.cool
               var funny_count = data[i].reviews[j].votes.funny
               var useful_count = data[i].reviews[j].votes.useful
-     
+              var coolvalue = $( "#sliderCool" ).slider("option", "value");
+              var funvalue = $( "#sliderFunny" ).slider("option", "value");
+              var usefulvalue = $( "#sliderUseful" ).slider("option", "value"); 
               //var original_score = stars * cool_count + stars * funny_count +  + stars * useful_count;
               //console.log("original_score", original_score)
-              var calculated_score =1+ cool_count*c + funny_count*f +useful_count*u;
+              var calculated_score =1+ cool_count*coolvalue + funny_count*funvalue +useful_count*usefulvalue;
               totalscore+=stars*calculated_score;
               totalnum+=calculated_score;
               }
              }
-            //  console.log("cool:"+c+" funny:"+f+" useful:"+u+" score:"+totalscore/totalnum);
-              }
-            }
-           }
+             recalculate=totalscore/totalnum;
+             console.log("cool:"+coolvalue+" funny:"+funvalue+" useful:"+usefulvalue+" score:"+recalculate);
  
-           
-          }
+       }
         
 });
-
-
+}
+ 
   </script>
 </head>
 <body>
- 
+  <p>
+    <label class="tick" style=" margin-left: 75px ">0.0</label>
+    <label class="tick" style="margin-left:  13px">0.5</label>
+    <label class="tick" style="margin-left: 13px">1.0</label>
+    <label class="tick" style="margin-left: 13px">1.5</label>
+    <label class="tick" style="margin-left: 13px">2.0</label>
+  </p>
 <p>
-  <label for="Cool">Cool:</label>
-  <input type="text" id="Cool" style="border:0; color:#f6931f; font-weight:bold;">
+  <label for="Cool" style="float:left;">Cool:</label>
+ <!--  <input type="text" id="Cool" style="float:left;left:80px;border:0;width:30px; color:#f6931f; font-weight:bold;"> -->
+  <div id="sliderCool"  style="margin-left:80px;top:5px; "></div>
 </p>
-<div id="sliderCool"></div>
+
 <p>
-  <label for="Funny">Funny:</label>
-  <input type="text" id="Funny" style="border:0; color:#f6931f; font-weight:bold;">
+  <label for="Funny" style="float:left;">Funny:</label>
+<!--   <input type="text" id="Funny" style="float:left;border:0;width:30px; color:#f6931f; font-weight:bold;"> -->
 </p>
-<div id="sliderFunny"></div>
+<div id="sliderFunny" style="margin-left:80px;top:5px;   "></div>
 <p>
-  <label for="Useful">Useful:</label>
-  <input type="text" id="Useful" style="border:0; color:#f6931f; font-weight:bold;">
+  <label for="Useful" style="float:left">Useful:</label>
+ <!--  <input type="text" id="Useful" style="float:left;border:0;width:30px; color:#f6931f; font-weight:bold;"> -->
 </p>
- <div id="sliderUseful"></div>
+ <div id="sliderUseful" style="margin-left:80px; top:5px;"></div>
  
 </body>
 </html>

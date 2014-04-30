@@ -9,24 +9,25 @@
   <script src="http://d3js.org/d3.v3.min.js"></script>
   <script>
   $(function() {
-    $( "#sliderfunny" ).slider({
+    $( "#sliderCool" ).slider({
       value:1,
       min: 0,
       max: 2,
       step: 0.5,
       slide: function( event, ui ) {
-        $( "#funny" ).val( "$" + ui.value );
+        $( "#Cool" ).val( "$" + ui.value );
       }
     })
     .on("slide", function(evt, value) {
   console.log("Changed")
 });
    
+   
 
     $( "#funny" ).val( $( "#sliderfunny" ).slider( "value" ) );
    
     $( "#sliderhelpful" ).slider({
-      value:1,
+      value:0,
       min: 0,
       max: 2,
       step: 0.5,
@@ -37,7 +38,7 @@
     $( "#helpful" ).val( $( "#sliderhelpful" ).slider( "value" ) );
   
     $( "#slidercool" ).slider({
-      value:1,
+      value:0,
       min: 0,
       max: 2,
       step: 0.5,
