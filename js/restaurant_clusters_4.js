@@ -3,12 +3,13 @@
  */
 var top8 =  ["Mexican", "American (Traditional)", "Sandwiches", "Pizza", "Nightlife", "Bars","Italian", "American (New)"];
 
+ 
   
-
-
+var Restinfo;
+var circles
 function draw_clusters (data) {
-
-	console.log(data);
+ 
+	 
 	_.each(data, function(elem){
 		elem.price = elem.attributes['Price Range'];
 		_.each(elem.categories, function(category){
@@ -20,8 +21,8 @@ function draw_clusters (data) {
 		})
 		if (elem.category==undefined) elem.category="Unknown"
 	})
-	console.log(_.unique(_.pluck(data, "category")).length);
-	console.log(data);
+	//console.log(_.unique(_.pluck(data, "category")).length);
+	//console.log(data);
 	var width = 860, height = 680;
 //	var fill = d3.scale.ordinal().range(['#827d92','#827354','#523536','#72856a','#2a3285','#383435'])
   //  var fill = d3.scale.ordinal().range(['#F7FCB9','#D9F0A3','#238443'])
@@ -41,12 +42,16 @@ function draw_clusters (data) {
 	_.each(data, function (elem) {
 //		console.log(elem);
 		elem.radius = +elem.stars * 4.6;
+		elem.recalculate=elem.stars;
 		elem.x = _.random(0, width);
 		elem.y = _.random(0, height);
 	})
+    
 
 	var padding = 2;
 	var maxRadius = d3.max(_.pluck(data, 'radius'));
+    Restinfo=data;
+    console.log(Restinfo[0].recalculate);
 
 	function getCenters(vname, w, h) {
 //		if (vname=="price") {
@@ -54,16 +59,16 @@ function draw_clusters (data) {
 ////			console.log(JSON.stringify(data));
 //			var v = _.uniq(_.pluck(_.pluck(data, "attributes"), "Price Range"));
 //		} else {
-			console.log('getting centers for other stuff' );
+		//	console.log('getting centers for other stuff' );
 
 			var v = _.uniq(_.pluck(data, vname));
-		console.log(v);
+		//console.log(v);
 //		}
 		c =[];
 		_.each(v, function (k, i) {
 //			console.log(k);
 			c.push({name: k, value: 1}); });
-		console.log(c);
+		//console.log(c);
 		var l = d3.layout.treemap(c).size([w, h]).ratio(1/1);
 
 //		console.log(l.nodes({children: c})[0].children)
@@ -71,13 +76,13 @@ function draw_clusters (data) {
 	}
 
 	var nodes = svg.selectAll("circle")
-		.data(data);
+		.data(Restinfo);
 
-	nodes.enter().append("circle")
+	 circles=nodes.enter().append("circle")
 		.attr("class", "node")
 		.attr("cx", function (d) { return d.x; })
 		.attr("cy", function (d) { return d.y; })
-		.attr("r", function (d) { return d.radius; })
+		.attr("r", function (d) { return d.recalculate*5;})
 		.style("fill", function (d) {if (d.open) return fill(1); else return fill(0)})
 		// .style("fill", function (d) { return fill(); })
 		// .on("mouseover", function (d) { showPopover.call(this, d); })
@@ -132,17 +137,21 @@ function draw_clusters (data) {
 	// });
 
 	function draw (varname) {
-		console.log(varname);
+	//	console.log(varname);
 		var foci = getCenters(varname, width-100, height-100);
-		console.log(foci);
+	//	console.log(foci);
 		force.on("tick", tick(foci, varname, .55));
 		labels(foci)
 		force.start();
 	}
 
 	function tick (foci, varname, k) {
-		console.log(varname);
+	//	console.log(varname);
+	//console.log(Restinfo)
+	   
+	   
 		return function (e) {
+
 			data.forEach(function (o, i) {
 				var f = foci[o[varname]];
 				o.y += ((f.y + (f.dy / 2)) - o.y) * k * e.alpha;
@@ -190,7 +199,7 @@ function draw_clusters (data) {
 	var selectedBubble, prevBubble, selectedDiv, prevDiv;
 
 	function clickPopover (d) {
-		console.log("clickPopover");
+		//console.log("clickPopover");
 		prevBubble = selectedBubble;
 		prevDiv = selectedDiv;
 		selectedDiv = this;
@@ -207,7 +216,7 @@ function draw_clusters (data) {
 	}
 
 	function updateHeatmap(d) {
-
+     update_restaurant_cluster(d);
 	}
 
 	function collide(alpha) {
@@ -291,5 +300,17 @@ function update_restaurant_cluster(restaurant){
 	update_clicked_bubble()
 	$("#heatmap").empty();
 	draw_heatmap(restaurant);
-	draw_barchart(restaurant);
+}
+
+function updateRestinfo(d){
+	Restinfo=d;
+    //console.log(Restinfo[0].recalculate); 
+     circles
+            // .transition()        
+            // .duration(function(d, i) { return i  * 200; })  
+            //.delay()    
+           // .style("opacity", 0)
+            .attr("r", function (d) {//console.log(d.recalculate); 
+  	return d.recalculate*5;})
+      
 }

@@ -98,7 +98,7 @@ var tiles = L.tileLayer('https://a.tiles.mapbox.com/v3/vieriw.i3f0efm1/{z}/{x}/{
 
 	function addMarkerLabels(clusters){
 		_.each(clusters.features, function(row){
-			console.log(row.properties.count)
+		//	console.log(row.properties.count)
 			var markerLabel;
 			// if (row.properties.count==undefined){
 			// 	markerLabel = 0;
@@ -111,7 +111,7 @@ var tiles = L.tileLayer('https://a.tiles.mapbox.com/v3/vieriw.i3f0efm1/{z}/{x}/{
 
 				markerLabel = row.properties.count;
 
-				console.log(row.properties.name + " lat:"  + row.g.location.lat + " lng:" + row.g.location.lng);
+			//	console.log(row.properties.name + " lat:"  + row.g.location.lat + " lng:" + row.g.location.lng);
 				var latlng = new L.LatLng(row.g.centroid[1],  row.g.centroid[0]);
 
 				var icon  = L.divIcon({
@@ -171,8 +171,8 @@ var tiles = L.tileLayer('https://a.tiles.mapbox.com/v3/vieriw.i3f0efm1/{z}/{x}/{
 	*/
 
 	function clusterClick(e){
-		console.log("marker clicked");
-		console.log(rowToExpand);
+		//console.log("marker clicked");
+		//console.log(rowToExpand);
 
 		clearMarkers();
 		clearPins();
@@ -182,14 +182,14 @@ var tiles = L.tileLayer('https://a.tiles.mapbox.com/v3/vieriw.i3f0efm1/{z}/{x}/{
 			return data.neighborhood == rowToExpand.properties.name;
 		})
 
-		console.log(restaurantsInNeighborhood.length);
+		//console.log(restaurantsInNeighborhood.length);
 
 		markerGroup = [];
 
 		//add the markers now ... 
 		_.each(restaurantsInNeighborhood, function(restaurant){
-			console.log("lat: " + restaurant.latitude + " long: " + restaurant.longitude);
-			console.log(restaurant);
+			// console.log("lat: " + restaurant.latitude + " long: " + restaurant.longitude);
+			// console.log(restaurant);
 			var latLng = new L.LatLng(restaurant.latitude,  restaurant.longitude);
 			var popupText = '<b>' + restaurant.name + '</b><br>'
 							+ '<b>' + restaurant.name + '</b><br>'
@@ -227,7 +227,7 @@ var tiles = L.tileLayer('https://a.tiles.mapbox.com/v3/vieriw.i3f0efm1/{z}/{x}/{
 		})
 
 		_.each(markerGroup, function (marker) {
-			console.log(marker);
+		//	console.log(marker);
 			marker.addTo(map);
 		})
 		var group = new L.featureGroup(markerGroup);
@@ -290,7 +290,7 @@ var tiles = L.tileLayer('https://a.tiles.mapbox.com/v3/vieriw.i3f0efm1/{z}/{x}/{
 
 
 	function zoomend(event){
-		console.log(event.target._zoom);
+		//console.log(event.target._zoom);
 		var zoom = event.target._zoom;
 
 		if (zoom<=10) {
