@@ -83,6 +83,10 @@ function draw_clusters (data) {
 		// .on("mouseover", function (d) { showPopover.call(this, d); })
 		// .on("mouseout", function (d) { removePopovers(); })	
 		 .on("mouseover", function(d) {    
+		 	console.log("mouseover");
+
+		 	d3.select(this).style("opacity", 0.5);
+
             div.transition()        
                 .duration(200)      
                 .style("opacity", .9);      
@@ -90,9 +94,13 @@ function draw_clusters (data) {
              div.html(d.name)
                 .style("left", (d3.event.pageX ) + "px")     
                 .style("top",  (d3.event.pageY  ) + "px"); 
-         
+
+
            })
-           .on("mouseout", function(d) {       
+           .on("mouseout", function(d) { 
+
+            d3.select(this).style("opacity", 1.0);
+      
             div.transition()        
                 .duration(500)      
                 .style("opacity", 0);  
@@ -100,7 +108,9 @@ function draw_clusters (data) {
              // .style("fill","grey")
              
          })	
-		.on("click", function(d) {clickPopover.call(this,d)})
+		.on("click", function(d) {
+			clickPopover.call(this,d)}
+			)
 
 	var force = d3.layout.force()
 		.charge(0)
