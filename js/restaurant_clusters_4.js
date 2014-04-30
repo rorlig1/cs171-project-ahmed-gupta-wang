@@ -2,6 +2,10 @@
  * Created by admin on 4/20/14.
  */
 var top8 =  ["Mexican", "American (Traditional)", "Sandwiches", "Pizza", "Nightlife", "Bars","Italian", "American (New)"];
+
+  
+
+
 function draw_clusters (data) {
 
 	console.log(data);
@@ -18,22 +22,25 @@ function draw_clusters (data) {
 	})
 	console.log(_.unique(_.pluck(data, "category")).length);
 	console.log(data);
-	var width = 600, height = 600;
+	var width = 860, height = 680;
 //	var fill = d3.scale.ordinal().range(['#827d92','#827354','#523536','#72856a','#2a3285','#383435'])
   //  var fill = d3.scale.ordinal().range(['#F7FCB9','#D9F0A3','#238443'])
     var fill = d3.scale.ordinal().range(['#f1f8a0','#D9F0A3','#238443'])
 
 
-
+     var div = d3.select("#chart").append("div")   
+    .attr("class", "tooltip")               
+    .style("opacity", 0.0);
 
     
 	var svg = d3.select("#chart").append("svg")
+
 		.attr("width", width)
 		.attr("height", height);
 
 	_.each(data, function (elem) {
 //		console.log(elem);
-		elem.radius = +elem.stars * 5.6;
+		elem.radius = +elem.stars * 4.6;
 		elem.x = _.random(0, width);
 		elem.y = _.random(0, height);
 	})
@@ -73,8 +80,26 @@ function draw_clusters (data) {
 		.attr("r", function (d) { return d.radius; })
 		.style("fill", function (d) { return fill( d.open);})
 		// .style("fill", function (d) { return fill(d.open); })
-		.on("mouseover", function (d) { showPopover.call(this, d); })
-		.on("mouseout", function (d) { removePopovers(); })		
+		// .on("mouseover", function (d) { showPopover.call(this, d); })
+		// .on("mouseout", function (d) { removePopovers(); })	
+		 .on("mouseover", function(d) {    
+            div.transition()        
+                .duration(200)      
+                .style("opacity", .9);      
+            // div .html(formatTime(d.date) + "<br/>"  + d.close)  
+             div.html(d.name)
+                .style("left", (d3.event.pageX ) + "px")     
+                .style("top",  (d3.event.pageY  ) + "px"); 
+         
+           })
+           .on("mouseout", function(d) {       
+            div.transition()        
+                .duration(500)      
+                .style("opacity", 0);  
+             //   node
+             // .style("fill","grey")
+             
+         })	
 		.on("click", function(d) {clickPopover.call(this,d)})
 
 	var force = d3.layout.force()

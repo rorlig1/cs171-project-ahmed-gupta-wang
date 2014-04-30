@@ -838,9 +838,9 @@
 ]
   
 
-  var margin = { top: 70, right: 0, bottom: 100, left: 100 },
+  var margin = { top: 70, right: 0, bottom: 0, left: 100 },
     width = 860 - margin.left - margin.right,
-    height = 330 - margin.top - margin.bottom,
+    height = 230 - margin.top - margin.bottom,
     gridSize = Math.floor(width / 24),
     gridSizeW= Math.floor(width / 24),
     gridSizeH= Math.floor(height /7),
@@ -859,13 +859,13 @@
   
   function draw_heatmap(data){
       i = 0
-
+      console.log(data)
       for(c in combinations){
         checkin_lookup = combinations[c].lookup
         if(data.checkin.checkin_info[checkin_lookup]){
           var info = { day: combinations[c].day, hour:combinations[c].hour, value: data.checkin.checkin_info[checkin_lookup]}
           array1.push(info)
-        }else{
+        } else{
           var info = { day: combinations[c].day, hour:combinations[c].hour, value: 0}
           array1.push(info)
         }
