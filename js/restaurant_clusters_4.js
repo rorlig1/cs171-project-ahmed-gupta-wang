@@ -128,7 +128,7 @@ function draw_clusters (data) {
 	});
 
 	// $( ".btn" ).click(function() {
-		
+
 	// });
 
 	function draw (varname) {
