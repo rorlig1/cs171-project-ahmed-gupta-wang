@@ -182,7 +182,7 @@ var tiles = L.tileLayer('https://a.tiles.mapbox.com/v3/vieriw.i3f0efm1/{z}/{x}/{
 			return data.neighborhood == rowToExpand.properties.name;
 		})
 
-		console.log(restaurantsInNeighborhood.lengt);
+		console.log(restaurantsInNeighborhood.length);
 
 		markerGroup = [];
 

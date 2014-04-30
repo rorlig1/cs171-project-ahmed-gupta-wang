@@ -100,7 +100,7 @@ function draw_clusters (data) {
              // .style("fill","grey")
              
          })	
-		.on("click", function(d) {clickPopover.call(this,d)})
+		.on("click", function(d) { clickPopover.call(this,d)})
 
 	var force = d3.layout.force()
 		.charge(0)
