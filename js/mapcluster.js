@@ -47,7 +47,8 @@ var tiles = L.tileLayer('https://a.tiles.mapbox.com/v3/vieriw.i3f0efm1/{z}/{x}/{
 	var markerGroup = []
 
 	var neighborhoodClusters;
-	var selectedRestaurant;
+	var selectedRestaurant, selectedMarker;
+	var previousSelectedMarker;
 	//customIcon for the map
 	// var custIcon = L.divIcon({
 	//             // specify a class name that we can refer to in styles, as we
@@ -197,11 +198,25 @@ var tiles = L.tileLayer('https://a.tiles.mapbox.com/v3/vieriw.i3f0efm1/{z}/{x}/{
 			var marker = new L.Marker(new L.LatLng(restaurant.latitude,  restaurant.longitude),
 									 {icon: restaurantIcon})
 								.on("click",  function(e){
+									previousSelectedMarker = selectedMarker;
+									selectedMarker = this;
 									selectedRestaurant = restaurant;
 									markerClicked(e, this);
+									if (previousSelectedMarker!==undefined){
+										previousSelectedMarker.setIcon(restaurantIcon);
+									}
+									
 								}) 
-	       						.on("mouseover",markerMouseOver)
-	         					.on("mouseout", markerMouseOut)
+	       						.on("mouseover",function(e){
+	       							if (selectedRestaurant!==restaurant){
+	       							  	this.setIcon(restaurantIcon2)
+	       							} 
+	       						})
+	         					.on("mouseout", function(e){
+	         						if (selectedRestaurant!==restaurant){
+	       							  	this.setIcon(restaurantIcon);
+	       							} 
+	         					})
 
 	        marker.bindPopup("<p> " + restaurant.name + " </p> ", {
 	        		showOnMouseOver: true
