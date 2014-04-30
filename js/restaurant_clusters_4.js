@@ -87,8 +87,9 @@ function draw_clusters (data) {
 
 		 	d3.select(this).style("opacity", 0.5);
 
-            div.transition()        
-                .duration(200)      
+            div
+            // .transition()        
+                // .duration(200)      
                 .style("opacity", .9);      
             // div .html(formatTime(d.date) + "<br/>"  + d.close)  
              div.html(d.name)
@@ -185,7 +186,9 @@ function draw_clusters (data) {
 		});
 		$(this).popover('show')
 	}
+	
 	var selectedBubble, prevBubble, selectedDiv, prevDiv;
+
 	function clickPopover (d) {
 		console.log("clickPopover");
 		prevBubble = selectedBubble;
@@ -193,7 +196,8 @@ function draw_clusters (data) {
 		selectedDiv = this;
 		selectedBubble = d;
 		console.log(d);
-		updateHeatmap(d);
+		$("#heatmap").empty();
+		draw_heatmap(d);
 		d3.select(this).style("fill", fill(2));
 		if (prevDiv!=undefined) {
 			d3.select(prevDiv).style("fill", function(d){ if (prevBubble.open) { return fill(1);} else {return fill(0);}})
@@ -233,10 +237,14 @@ function draw_clusters (data) {
 };
 
 
-
+function update_clicked_bubble(restaurant){
+	//todo this...
+}
 function update_restaurant_cluster(restaurant){
 	console.log("update_restaurant");
 	console.log(restaurant);
+	// clickPopover(restaurant);
+	update_clicked_bubble()
 	$("#heatmap").empty();
 	draw_heatmap(restaurant);
 }
