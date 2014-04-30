@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI Slider - Snap to increments</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script>
+//   $(function() {
+//     $( "#sliderCool" ).slider({
+//       value:1,
+//       min: 0,
+//       max: 2,
+//       step: 0.5,
+//       slide: function( event, ui ) {
+//         $( "#Cool" ).val( "$" + ui.value );
+//       }
+//     })
+//     .on("slide", function(evt, value) {
+//   console.log("Changed")
+// });
+   
+
+//     $( "#Funny" ).val( $( "#sliderFunny" ).slider( "value" ) );
+   
+//     $( "#sliderFunny" ).slider({
+//       value:1,
+//       min: 0,
+//       max: 2,
+//       step: 0.5,
+//       slide: function( event, ui ) {
+//         $( "#Funny" ).val( "$" + ui.value );
+//       }
+//     });
+//     $( "#Funny" ).val( $( "#sliderFunny" ).slider( "value" ) );
+  
+//     $( "#sliderUseful" ).slider({
+//       value:1,
+//       min: 0,
+//       max: 2,
+//       step: 0.5,
+//       slide: function( event, ui ) {
+//         $( "#Useful" ).val( "$" + ui.value );
+//       }
+//     });
+//     $( "#Useful" ).val(  $( "#sliderUseful" ).slider( "value" ) );
+    
+//   });
+
+    
+
+    d3.json("data_with_open/output_phoenix_30.json", function(data){
+           console.log(data)
+           //for ( i in data){
+           // console.log(data[i])
+           var i=1;
+
+            if(data[i].review_count){
+            console.log(data[i] )
+            var rc = data[i].review_count
+            
+            var recalculate=[];
+            for (var c=0;c<=2;c+=0.5){
+             for (var  f=0;f<=2;f+=0.5){ 
+                for (var u=0;u<=2;u+=0.5){
+              
+              var totalscore=0;
+              var totalnum=0;   
+              for(j =0;  j < rc; j++)
+              {
+              if(data[i].reviews[j]){
+              var stars = data[i].reviews[j].stars
+              //console.log("RR:", data[i].reviews[j].stars)
+              var cool_count = data[i].reviews[j].votes.cool
+              var funny_count = data[i].reviews[j].votes.funny
+              var useful_count = data[i].reviews[j].votes.useful
+     
+              //var original_score = stars * cool_count + stars * funny_count +  + stars * useful_count;
+              //console.log("original_score", original_score)
+              var calculated_score =1+ cool_count*c + funny_count*f +useful_count*u;
+              totalscore+=stars*calculated_score;
+              totalnum+=calculated_score;
+              }
+             }
+              console.log("cool:"+c+" funny:"+f+" useful:"+u+" score:"+totalscore/totalnum);
+              }
+            }
+           }
+ 
+           
+          }
+        
+});
+
+
+  </script>
+</head>
+<body>
+ 
+<p>
+  <label for="Cool">Cool:</label>
+  <input type="text" id="Cool" style="border:0; color:#f6931f; font-weight:bold;">
+</p>
+<div id="sliderCool"></div>
+<p>
+  <label for="Funny">Funny:</label>
+  <input type="text" id="Funny" style="border:0; color:#f6931f; font-weight:bold;">
+</p>
+<div id="sliderFunny"></div>
+<p>
+  <label for="Useful">Useful:</label>
+  <input type="text" id="Useful" style="border:0; color:#f6931f; font-weight:bold;">
+</p>
+ <div id="sliderUseful"></div>
+ 
+</body>
+</html>

@@ -53,45 +53,49 @@
 
     d3.json("data_with_open/output_phoenix_30.json", function(data){
            console.log(data)
-           for ( i in data){
-            console.log(data[i])
+           //for ( i in data){
+           // console.log(data[i])
+           var i=0;
+
             if(data[i].review_count){
-            console.log(data[i].review_count)
+            console.log(data[i] )
             var rc = data[i].review_count
-            for(j =0;  j < rc; j++)
-            {
-              if(data[i].reviews[j]){
-                var stars = data[i].reviews[j].stars
-              console.log("RR:", data[i].reviews[j].stars)
-               var funny_count = data[i].reviews[j].votes.funny
-              console.log("Funny:", data[i].reviews[j].votes.funny)
-              var cool_count = data[i].reviews[j].votes.cool
-              console.log("Cool:", data[i].reviews[j].votes.cool)
-              var useful_count = data[i].reviews[j].votes.useful
-              console.log("Useful:", data[i].reviews[j].votes.useful)
-              var original_score = stars * funny_count + stars * cool_count + stars * useful_count;
-              console.log("original_score", original_score)
-              //funvalue= 1;
-              //helpfulvalue = 1; 
-              //coolvalue = 1;
-              var val = $('#sliderfunny').slider("option", "value");
-              var funvalue = $( "#sliderfunny" ).slider("option", "value");
-              var helpfulvalue = $( "#sliderhelpful" ).slider("option", "value");
-              var coolvalue = $( "#slidercool" ).slider("option", "value");
-              console.log(val, funvalue, helpfulvalue, coolvalue)
-              if(funvalue == 0 && helpfulvalue == 0 && coolvalue == 0){
-                var calculated_score = original_score
-              }else{
-              var calculated_score = stars * funny_count * funvalue
-                                   + stars * cool_count *  helpfulvalue
-                                   + stars * useful_count * coolvalue;
+        
+
+            // for(j =0;  j < rc; j++)
+            // {
+            //   if(data[i].reviews[j]){
+            //   var stars = data[i].reviews[j].stars
+            //   console.log("RR:", data[i].reviews[j].stars)
+            //   var funny_count = data[i].reviews[j].votes.funny
+            //   console.log("Funny:", data[i].reviews[j].votes.funny)
+            //   var cool_count = data[i].reviews[j].votes.cool
+            //   console.log("Cool:", data[i].reviews[j].votes.cool)
+            //   var useful_count = data[i].reviews[j].votes.useful
+            //   console.log("Useful:", data[i].reviews[j].votes.useful)
+            //   var original_score = stars * funny_count + stars * cool_count + stars * useful_count;
+            //   console.log("original_score", original_score)
+            //   //funvalue= 1;
+            //   //helpfulvalue = 1; 
+            //   //coolvalue = 1;
+            //   var val = $('#sliderfunny').slider("option", "value");
+            //   var funvalue = $( "#sliderfunny" ).slider("option", "value");
+            //   var helpfulvalue = $( "#sliderhelpful" ).slider("option", "value");
+            //   var coolvalue = $( "#slidercool" ).slider("option", "value");
+            //   console.log(val, funvalue, helpfulvalue, coolvalue)
+            //   if(funvalue == 0 && helpfulvalue == 0 && coolvalue == 0){
+            //     var calculated_score = original_score
+            //   }else{
+            //   var calculated_score = stars * funny_count * funvalue
+            //                        + stars * cool_count *  helpfulvalue
+            //                        + stars * useful_count * coolvalue;
               
-            }
-            console.log("calculated_score", calculated_score)
-            }
-            }
+            // }
+            // console.log("calculated_score", calculated_score)
+            // }
+            // }
           }
-           }
+        
 });
 
 
@@ -100,17 +104,17 @@
 <body>
  
 <p>
-  <label for="funny">Funny:</label>
+  <label for="funny">Cool:</label>
   <input type="text" id="funny" style="border:0; color:#f6931f; font-weight:bold;">
 </p>
 <div id="sliderfunny"></div>
 <p>
-  <label for="helpful">Helpful:</label>
+  <label for="helpful">Funny:</label>
   <input type="text" id="helpful" style="border:0; color:#f6931f; font-weight:bold;">
 </p>
 <div id="sliderhelpful"></div>
 <p>
-  <label for="cool">Cool:</label>
+  <label for="cool">Useful:</label>
   <input type="text" id="cool" style="border:0; color:#f6931f; font-weight:bold;">
 </p>
  <div id="slidercool"></div>
