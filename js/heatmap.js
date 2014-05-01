@@ -862,7 +862,7 @@ var fill = d3.scale.ordinal().range(['#f1f8a0','#D9F0A3','#238443']).domain([0,1
   
   function draw_heatmap(data){
       i = 0
-      console.log(data)
+     // console.log(data)
       for(c in combinations){
         checkin_lookup = combinations[c].lookup
         if(data.checkin.checkin_info[checkin_lookup]){
@@ -897,7 +897,7 @@ var fill = d3.scale.ordinal().range(['#f1f8a0','#D9F0A3','#238443']).domain([0,1
         .style("font-family","arial") 
         .text("Checkin Times");
          
-         svg.append("text")
+        svg.append("text")
         .attr("x", 600)             
         .attr("y",  -35)
         .attr("text-anchor", "left")  
@@ -1009,8 +1009,12 @@ var fill = d3.scale.ordinal().range(['#f1f8a0','#D9F0A3','#238443']).domain([0,1
 }
 
 function draw_barchart(data){
-  console.log("draw_barchart")
-  console.log(data);
+ // console.log("draw_barchart")
+   console.log(data);
+  var reviewcom=[];
+  reviewcom.push(data.stars);
+  reviewcom.push(data.recalculate);
+  console.log(reviewcom)
   reviewMap =  _.range(5).map(function(){return 0;})
   voteMap = _.range(3).map(function ()  { return 0; })
 
@@ -1021,39 +1025,123 @@ function draw_barchart(data){
     voteMap[2]+= d.votes.useful;
   })
 
-  console.log(voteMap);
+  //console.log(reviewMap);
 
   voteLabels = ["Cool", "Funny", "Helpful"];
 
+   //  var svgcom = d3.select("#barchart") 
+   //          .append("svg")
+   //          .attr("width", 500)
+   //          .attr("height", 50)
+   //          .append("g")
+   //          .attr("transform", "translate(  0 , 0)");
 
-  var height = 100;
+   //  svgcom.selectAll("rect")
+   // .data(reviewcom)
+   // .enter()
+   // .append("rect")
+   // .attr("x", 270)
+   // .attr("y", function(d, i) {
+   //  return 10+i *20;  
+   // })
+   // .attr("width",  function(d, i) {
+   //  return d*20;  
+   // })
+   // .attr("height", 12)
+   // .attr("fill", "#238443") 
 
+  var w =400,
+      h= 250;
+  
   var y = d3.scale.linear().domain([5,0])
     .range([5, 0]);
   
-  // console.log(reviewMap);
-  //y-axis
-  // var yAxis = d3.svg.axis()
-  //   .scale(y)
-  //   .orient("left")
-  //   .tickValues([0,1,2,3,4])
+  var xscale = d3.scale.linear()
+            .domain([0, d3.max(reviewMap)])
+            .range([1, 120]);
+  
 
- var barchart =  d3.select("#barchart")
-  .selectAll("div")
-    .data(reviewMap)
-  .enter().append("div")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-    .style("width", function(d) { return d * 5 + "px"; })
-    .text(function(d) { return d; });
+  var svgbar = d3.select("#barchart") 
+            .append("svg")
+            .attr("width", 410)
+            .attr("height", h)
+            .append("g")
+            .attr("transform", "translate(  0 , 0)");
+  
+   svgbar.append("text")
+        .attr("x", 20)             
+        .attr("y", 35)
+        .attr("text-anchor", "left")  
+        .style("font-size", "18px")  
+        .style("font-family","arial") 
+        .style("font-weight", "bold")
+        .text(data.name);
+        
+   svgbar.append("text")
+        .attr("x", 20)             
+        .attr("y", 60)
+        .attr("text-anchor", "left")  
+        .style("font-size", "16px")  
+        .style("font-family","arial") 
+        .text("Review Distribution")
+        .style("font-weight", "bold")
+        .attr("fill", "#8c8c8c") 
+ 
+  svgbar.selectAll("rect")
+   .data(reviewMap)
+   .enter()
+   .append("rect")
+    .attr("fill", "#fff")
+    .attr("stroke", "white") 
+    .transition().duration(600)
+   .attr("x", 40)
+   .attr("y", function(d, i) {
+    return 80+i * 30;  //Bar width of 20 plus 1 for padding
+   })
+   .attr("width",  function(d, i) {
+    return xscale(d);  //Bar width of 20 plus 1 for padding
+   })
+   .attr("height", 18)
+   .attr("fill", "#238443") 
 
 
-var dataset = {
-  apples: [53245, 28479, 19697, 24037, 40245],
-};
+   svgbar.selectAll("atext")
+   .data(reviewMap)
+   .enter()
+   .append("text")
+   .text(function(d) {
+        return d;
+   })
+   .attr("text-anchor", "left") 
+   .attr("x", function(d, i) {
+    console.log(xscale(d))
+       return xscale(d)+50  ;  
+   })
+   .attr("y", function(d,i) {
+        return  93+i * 30;
+   });
+ 
+    svgbar.selectAll("ttext")
+   .data(reviewMap)
+   .enter()
+   .append("text")
+   .text(function(d,i) {
+        return i+1;
+   })
+   .attr("text-anchor", "left") 
+   .attr("x", function(d, i) {
+       return  20  ;  
+   })
+   .attr("y", function(d,i) {
+        return  93+i * 30;
+   })
+  .attr("fill", "#afafaf") 
+  .style("font-weight", "bold")
+ 
 
-var width = 100,
-    height = 100,
-    radius = Math.min(width, height) / 2;
+var width = 250,
+    height = 250,
+    radius =90;
 
 var color = d3.scale.category20();
 
@@ -1061,70 +1149,47 @@ var pie = d3.layout.pie()
     .sort(null);
 
 var arc = d3.svg.arc()
-    .innerRadius(radius - 40)
+    .innerRadius(radius - 50)
     .outerRadius(radius - 20);
 
 var svg = d3.select("#donutchart").append("svg")
     .attr("width", width)
     .attr("height", height)
     .append("g")
-    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+    .attr("transform", "translate(100 , 150)");
+
+    svg.append("text")
+        .attr("x",  -100)             
+        .attr("y",  -90)
+        .attr("text-anchor", "left")  
+        .style("font-size", "16px")  
+        .style("font-family","arial") 
+        .text("Vote Distribution")
+        .style("font-weight", "bold")
+        .attr("fill", "#8c8c8c") 
 
 var g = svg.selectAll("path")
     .data(pie(voteMap))
-  .enter()
+    .enter()
 
-
-
-  g.append("path").attr("fill", function(d, i) { return fill(i); })
+  g.append("path")
+    .attr("fill", "#fff")
+    .attr("stroke", "white") 
+    .transition().duration(600)
+    .attr("fill", "#238443") 
+    .attr("stroke", "white")
+    .attr("stroke-width", 2)
     .attr("d", arc);
 
- g.append("text")
+  g.append("text")
       .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
       .attr("dy", ".3em")
       // .attr("dx", "1em")
       .style("text-anchor", "middle")
-      .text(function(d,i) { return voteLabels[i]});
-
-// barchart.append("g")
-//   .attr("class", "y axis")
-//   .call(yAxis);
-  
-  ///make donut chart....
-
-//   var radius=100;
-
-//   var apples = [53245, 28479, 19697, 24037, 40245];
-
-
-//   var color = d3.scale.category20();
-
-
-// var arc = d3.svg.arc()
-//     .outerRadius(radius - 5)
-//     .innerRadius(radius - 35);
-
-//   var pie = d3.layout.pie();
-
-//   var g = d3.select("#donutchart").selectAll(".arc")
-//       .data(pie(apples))
-//     .enter().append("g")
-//       .attr("class", "arc");
-
-//   g.append("path")
-//       .attr("d", arc)
-//       .style("fill", function(d,i) { return color(i) })
-//       .attr("d", arc);
-
-
-  // var arc = d3.svg.arc()
-  //   .innerRadius(radius-70)
-  //   .outerRadius(radius-10);
-
-  // var g = d3.select("#donutchart").selectAll("path")
-  //   .data(pie(voteMap))
-  // .enter().append("path")
-  //   .attr("fill", function(d, i) { return "#D9F0A3"; })
-  //   .attr("d", arc);
+      .text(function(d,i) { return voteLabels[i]})
+      .style("font-size", "16px")  
+      .style("font-family","arial")
+ 
+ 
 
 }

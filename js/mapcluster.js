@@ -201,6 +201,7 @@ var tiles = L.tileLayer('https://a.tiles.mapbox.com/v3/vieriw.i3f0efm1/{z}/{x}/{
 									previousSelectedMarker = selectedMarker;
 									selectedMarker = this;
 									selectedRestaurant = restaurant;
+									
 									markerClicked(e, this);
 									if (previousSelectedMarker!==undefined){
 										previousSelectedMarker.setIcon(restaurantIcon);
@@ -299,7 +300,8 @@ var tiles = L.tileLayer('https://a.tiles.mapbox.com/v3/vieriw.i3f0efm1/{z}/{x}/{
 			showPins();
 			$("#chart").empty();
 			$("#heatmap").empty();
-
+            $("#barchart").empty();
+		    $("#donutchart").empty();
 		}
 	}
 

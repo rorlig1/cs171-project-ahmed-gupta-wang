@@ -9,12 +9,10 @@
         <meta name="generator" content="Bootply" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         
-
         <link href="css/bootstrap.css" rel="stylesheet">
         <link href="css/bootstrap2.css" rel="stylesheet">
         
-        
-        
+
         <!--[if lt IE 9]>
           <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
@@ -228,32 +226,33 @@
     <body  >
         
  
-<div class="container-fluid" style="background-color:#6b6b6b;  " >
-  <div class="row-fluid" style="background-color:#238443;  width:1320px;">
+<div class="container-fluid" style="background-color:#6b6b6b;      " >
+  <div class="row-fluid" style="background-color:#238443;  width:1320px;  margin-left: auto;
+  margin-right: auto;">
          <div class="span4" style= "height:500px;">
           <p id="titleBig"> Yelp Data Visualization </p>
           <div id="map"></div>
            <p id="description"> Recalculate the scores of the restaurants according to the votes of each reviews.<br>So the reviews which are proved by most of users would be considered more or less important in the average score based on user preference of the reviews. &nbsp&nbsp&nbsp</p>
             
             <p>
-    <b class="tick" style="margin-left:  73px">0.0</b>
-    <b class="tick" style="margin-left:  13px">0.5</b>
-    <b class="tick" style="margin-left: 13px">1.0</b>
-    <b class="tick" style="margin-left: 13px">1.5</b>
-    <b class="tick" style="margin-left: 13px">2.0</b>
+    <b class="tick" style="margin-left:  80px">00</b>
+    <b class="tick" style="margin-left:  18px">05</b>
+    <b class="tick" style="margin-left: 18px">10</b>
+    <b class="tick" style="margin-left: 18px">15</b>
+    <b class="tick" style="margin-left: 18px">20</b>
   </p>
            <p>
            <b class="tick">Cool</b>
-           <input id="sliderCool" data-slider-id='CC' type="text" data-slider-min="0" data-slider-max="15" data-slider-step="1" data-slider-value="1" style="margin-left: 20px"/>
+           <input id="sliderCool" data-slider-id='CC' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="1" style="margin-left: 20px"/>
            </p>
 
            <p>
-           <b class="tick">Funny</b><input id="sliderFunny"  data-slider-id='FC' type="text" data-slider-min="0" data-slider-max="15" data-slider-step="1" data-slider-value="1"/>
+           <b class="tick">Funny</b><input id="sliderFunny"  data-slider-id='FC' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="1"/>
            </p>
  
            <p>
 
-           <b class="tick">Useful</b><input id="sliderUseful"   data-slider-id='UC' type="text" data-slider-min="0" data-slider-max="15" data-slider-step="1" data-slider-value="1"/>
+           <b class="tick">Useful</b><input id="sliderUseful"   data-slider-id='UC' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="1"/>
            </p>
  
          </div>
@@ -269,8 +268,8 @@
                 <label class="btn btn-primary" id="category">
                   <input type="radio" name="options"> Category
                 </label>
-                <label class="btn btn-primary" id="city">
-                  <input type="radio" name="options"> City
+                <label class="btn btn-primary" id="popularity">
+                  <input type="radio" name="options"> Popularity
                 </label>
               </div>
 
@@ -288,15 +287,17 @@
         </div>
        
   </div>
-  <div class="row-fluid" style="background-color:#fff ; width:1320px; ; height:250px ;">
-  <div class="span2" style="margin-left:20px; margin-top: 30px">
+  <div class="row-fluid" style="background-color:#fff ; width:1320px; ; height:250px ;  margin-left: auto;
+  margin-right: auto;">
+  <div class="span2"  >
     <!-- if we do the review recalculation we do it here -->
-    <p> Review Distribution</p>
+   <!--  <p> Review Distribution</p> -->
     <div id="barchart" class="barchart"></div>
   </div>
-  <div class="span2" style="margin-left:20px; margin-top: 30px; height: 200px">
-      <p> Vote Distribution</p>
-    <div id="donutchart" class="donutchart" style="margin-left:20px; margin-top: 30px; height: 200px"></div>
+
+  <div class="span2"  >
+    <!--   <p> Vote Distribution</p> -->
+    <div id="donutchart" class="donutchart" ></div>
   </div>
   <div class="span7" >
         <div id = "heatmap" ;></div>

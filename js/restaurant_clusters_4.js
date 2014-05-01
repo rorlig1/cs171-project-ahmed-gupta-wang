@@ -7,11 +7,14 @@ var top8 =  ["Mexican", "American (Traditional)", "Sandwiches", "Pizza", "Nightl
   
 var Restinfo;
 var circles
+var infoLast;
 function draw_clusters (data) {
- 
-	 
-	_.each(data, function(elem){
+        data.sort(function(a, b){  return d3.descending(a.review_count,b.review_count);});
+        console.log(data)
+
+	 	_.each(data, function(elem){
 		elem.price = elem.attributes['Price Range'];
+		elem.popularity = elem.reviews.length;
 		_.each(elem.categories, function(category){
 			// console.log(category);
 			if (category!="Restaurants" && category!=undefined && _.contains(top8,category) && elem.category==undefined) {
@@ -20,7 +23,20 @@ function draw_clusters (data) {
 
 		})
 		if (elem.category==undefined) elem.category="Unknown"
-	})
+          
+       // console.log(elem.popularity)
+		//  _.each(elem.categories, function(category){
+		// 	// console.log(category);
+		// 	if (category!="Restaurants" && category!=undefined && _.contains(top8,category) && elem.category==undefined) {
+		// 		elem.category = category;
+		// 	}
+
+		// })
+
+	})  
+
+	 
+
 	//console.log(_.unique(_.pluck(data, "category")).length);
 	//console.log(data);
 	var width = 860, height = 680;
@@ -35,9 +51,10 @@ function draw_clusters (data) {
 
     
 	var svg = d3.select("#chart").append("svg")
-
 		.attr("width", width)
-		.attr("height", height);
+		.attr("height", height)
+		.append("g")
+		.attr("transform", "translate(60 , 30)");
 
 	_.each(data, function (elem) {
 //		console.log(elem);
@@ -51,6 +68,7 @@ function draw_clusters (data) {
 	var padding = 2;
 	var maxRadius = d3.max(_.pluck(data, 'radius'));
     Restinfo=data;
+    infoLast=Restinfo.recalculate;
     console.log(Restinfo[0].recalculate);
 
 	function getCenters(vname, w, h) {
@@ -125,7 +143,7 @@ function draw_clusters (data) {
 		.size([width, height])
 
 	draw('price');
-
+    var drawname;
 	$(".btn-group > .btn").click(function(){
 	    $(".btn-group > .btn").removeClass("active");
 	    $(this.id).addClass("active");
@@ -158,7 +176,7 @@ function draw_clusters (data) {
 				o.x += ((f.x + (f.dx / 2)) - o.x) * k * e.alpha;
 			});
 			nodes
-				.each(collide(.1))
+				.each(collide(.05))
 				.attr("cx", function (d) { return d.x; })
 				.attr("cy", function (d) { return d.y; });
 		}
@@ -166,14 +184,19 @@ function draw_clusters (data) {
 
 	function labels (foci) {
 		svg.selectAll(".label").remove();
-
+         
 		svg.selectAll(".label")
 			.data(_.toArray(foci)).enter().append("text")
 			.attr("class", "label")
 			.text(function (d) { return d.name })
 			.attr("transform", function (d) {
 				return "translate(" + (d.x + (d.dx / 2)) + ", " + (d.y + 20) + ")";
-			});
+			})
+			// .attr("transform", function (d) {
+			//    console.log(d.x);
+			//     console.log(d.name);
+   //          return "translate(" +  d.x  + ", " + (d.y ) + ")";
+   //          }); 
 	}
 
 	function removePopovers () {
@@ -208,7 +231,7 @@ function draw_clusters (data) {
 		$("#heatmap").empty();
 		$("#barchart").empty();
 		$("#donutchart").empty();
-		
+		clickedRest=d;
 		draw_heatmap(d);
 		draw_barchart(d)
 		d3.select(this).style("fill", fill(2));
@@ -251,10 +274,11 @@ function draw_clusters (data) {
 
 	 var legend = svg.append("svg")
 			       .attr("class", "legend");
-
+    var xc=70;
+    var yc=30;
     legend.append("circle")
-    	.attr("cx", function (d) { return 100; })
-		.attr("cy", function (d) { return height-120})
+    	.attr("cx", function (d) { return xc; })
+		.attr("cy", function (d) { return height-120-yc;})
 		.attr("r", function (d) { return 20; })
     	.style("fill", function(d, i) { return fill(0) });
 
@@ -262,32 +286,32 @@ function draw_clusters (data) {
       .attr("class", "mono")
       //.text(function(d) { return "≥ " + Math.round(d); })
       .text(function(d) { return "Closed"})
-      .attr("x", function(d, i) { return 100 + 30 })
-      .attr("y", height-115);
+      .attr("x", function(d, i) { return xc + 30 })
+      .attr("y", height-115-yc);
 
      legend.append("circle")
-    	.attr("cx", function (d) { return 100; })
-		.attr("cy", function (d) { return height-75})
+    	.attr("cx", function (d) { return xc; })
+		.attr("cy", function (d) { return height-75-yc})
 		.attr("r", function (d) { return 20; })
     	.style("fill", function(d, i) { return fill(1) });
 
     legend.append("text")
       .attr("class", "mono")
       .text(function(d) { return "Open"})
-      .attr("x", function(d, i) { return 100 + 30 })
-      .attr("y", height-70);
+      .attr("x", function(d, i) { return xc + 30 })
+      .attr("y", height-70-yc);
 
     legend.append("circle")
-    	.attr("cx", function (d) { return 100; })
-		.attr("cy", function (d) { return height-30})
+    	.attr("cx", function (d) { return xc; })
+		.attr("cy", function (d) { return height-30-yc})
 		.attr("r", function (d) { return 20; })
     	.style("fill", function(d, i) { return fill(2) });
 
     legend.append("text")
       .attr("class", "mono")
       .text(function(d) { return "Selected"})
-      .attr("x", function(d, i) { return 100 + 30 })
-      .attr("y", height-25);
+      .attr("x", function(d, i) { return xc + 30 })
+      .attr("y", height-25-yc);
 
 };
 
@@ -295,24 +319,41 @@ function draw_clusters (data) {
 function update_clicked_bubble(restaurant){
 	//todo this...
 }
+ 
+var clickedRest;
+
 function update_restaurant_cluster(restaurant){
-	console.log("update_restaurant");
-	console.log(restaurant);
+	//console.log("update_restaurant");
+	//console.log(restaurant);
 	// clickPopover(restaurant);
 	update_clicked_bubble()
 	$("#heatmap").empty();
+	$("#barchart").empty();
+	$("#donutchart").empty();
 	draw_heatmap(restaurant);
+	draw_barchart(restaurant);
+	clickedRest=restaurant;
 }
 
 function updateRestinfo(d){
-	Restinfo=d;
+	 Restinfo=d;
+	 infoLast=Restinfo.recalculate;
     //console.log(Restinfo[0].recalculate); 
      circles
-            // .transition()        
+      // .transition()        
             // .duration(function(d, i) { return i  * 200; })  
-            //.delay()    
-           // .style("opacity", 0)
-            .attr("r", function (d) {//console.log(d.recalculate); 
-  	return d.recalculate*5;})
-      
+            //.delay()  
+        .transition().duration(100)  
+      // .style("opacity", function(d,i){
+      // 	// console.log(Math.abs(d.recalculate);
+      // 	// console.log(Math.abs(d.recalculate-infoLast[i])/d.recalculate);
+      // 	// if (Math.abs(d.recalculate-infoLast[i])/d.recalculate>0.05)
+      // 	// 	{return 0.6}else{return 1}
+      // 	return 0.6;
+      // })
+      // .transition().duration(600)
+     .attr("r", function (d) {//console.log(d.recalculate); 
+  	  return d.recalculate*5;})
+     .style("opacity",0.9)
+          
 }

@@ -50,7 +50,7 @@ var usefulvalue = $('#sliderUseful').slider()
                 }
                }
              recalculate=totalscore/totalnum;
-             console.log("cool:"+coolvalue.getValue()+" funny:"+funvalue.getValue()+" useful:"+usefulvalue.getValue()+" score:"+recalculate);
+           //  console.log("cool:"+coolvalue.getValue()+" funny:"+funvalue.getValue()+" useful:"+usefulvalue.getValue()+" score:"+recalculate);
              Restinfo[i].recalculate=recalculate;
             }
           }
