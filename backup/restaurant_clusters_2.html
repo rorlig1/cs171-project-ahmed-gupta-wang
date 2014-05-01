@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Yelp Data Visualization - Bubble Charts </title>
+    <link href="css/bootstrap2.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        background-color: white;
+        padding-left: 50px;
+      }
+      circle {    
+        stroke-width: 2px;
+        opacity: .8;
+      }
+      .btn-group {
+        margin-left: 330px;
+      }
+      .label {
+        fill: grey;
+        font-size: 10px;
+      }
+    </style>
+
+  </head>
+  <body >
+    </div class="row" style="background-color:#FFFFE5">
+      <div class="btn-group" data-toggle="buttons">
+        <label class="btn btn-primary active" id="price" style="width: 100px; height: 40px;">
+          <input type="radio" name="options"> Price
+        </label>
+        <label class="btn btn-primary" id="category" style="width: 100px; height: 40px;">
+          <input type="radio" name="options"> Category
+        </label>
+        <label class="btn btn-primary" id="city" style="width: 100px; height: 40px;">
+          <input type="radio" name="options"> City
+        </label>
+      </div>
+    </div>
+    <div id="chart"></div>
+    <script src="js/d3.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/underscore.js"></script>
+    <script src="js/restaurant_clusters2.js">
+
+    </script>
+  </body>
+</html>
