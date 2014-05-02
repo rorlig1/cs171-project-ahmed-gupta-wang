@@ -236,7 +236,7 @@ var tiles = L.tileLayer('https://a.tiles.mapbox.com/v3/vieriw.i3f0efm1/{z}/{x}/{
 		map.fitBounds(group.getBounds());
 
 		$("#chart").empty();
-
+		$("#intro").hide();
 		draw_clusters(restaurantsInNeighborhood);
 		// console.log(row)
 		//remove all the geojson layers and markers and add the markers for this layer...
@@ -302,6 +302,7 @@ var tiles = L.tileLayer('https://a.tiles.mapbox.com/v3/vieriw.i3f0efm1/{z}/{x}/{
 			$("#heatmap").empty();
             $("#barchart").empty();
 		    $("#donutchart").empty();
+		    $("#intro").show();
 		}
 	}
 
