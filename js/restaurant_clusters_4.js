@@ -13,8 +13,8 @@ function draw_clusters (data) {
         console.log(data)
 
 	 	_.each(data, function(elem){
-		elem.price = elem.attributes['Price Range'];
-		elem.popularity = elem.reviews.length;
+		elem.price = elem['Price_Range'];
+		elem.popularity = elem.review_count;
 		_.each(elem.categories, function(category){
 			// console.log(category);
 			if (category!="Restaurants" && category!=undefined && _.contains(top8,category) && elem.category==undefined) {
@@ -96,12 +96,16 @@ function draw_clusters (data) {
 	var nodes = svg.selectAll("circle")
 		.data(Restinfo);
 
+
+
 	 circles=nodes.enter().append("circle")
 		.attr("class", "node")
 		.attr("cx", function (d) { return d.x; })
 		.attr("cy", function (d) { return d.y; })
 		.attr("r", function (d) { return d.recalculate*5;})
-		.style("fill", function (d) {if (d.open) return fill(1); else return fill(0)})
+		// .attr("id", function(d){})
+		.attr("id", function(d) { return d._id.oid})
+		.style("fill", function (d) { 	if (d.open) return fill(1); else return fill(0)})
 		// .style("fill", function (d) { return fill(); })
 		// .on("mouseover", function (d) { showPopover.call(this, d); })
 		// .on("mouseout", function (d) { removePopovers(); })	
@@ -222,6 +226,7 @@ function draw_clusters (data) {
 	var selectedBubble, prevBubble, selectedDiv, prevDiv;
 
 	function clickPopover (d) {
+		console.log(d);
 		//console.log("clickPopover");
 		prevBubble = selectedBubble;
 		prevDiv = selectedDiv;
@@ -317,16 +322,16 @@ function draw_clusters (data) {
 
 
 function update_clicked_bubble(restaurant){
-	//todo this...
+	// clickPopover.call(this,restaurant)
 }
  
 var clickedRest;
 
 function update_restaurant_cluster(restaurant){
 	//console.log("update_restaurant");
-	//console.log(restaurant);
+	//console.log(restaurant);r
 	// clickPopover(restaurant);
-	update_clicked_bubble()
+	update_clicked_bubble(restaurant)
 	$("#heatmap").empty();
 	$("#barchart").empty();
 	$("#donutchart").empty();
@@ -356,4 +361,8 @@ function updateRestinfo(d){
   	  return d.recalculate*5;})
      .style("opacity",0.9)
           
+}
+
+function setSelectedNode(markerId){
+
 }

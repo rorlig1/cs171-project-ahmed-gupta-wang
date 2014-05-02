@@ -1018,12 +1018,20 @@ function draw_barchart(data){
   reviewMap =  _.range(5).map(function(){return 0;})
   voteMap = _.range(3).map(function ()  { return 0; })
 
-  _.each(data.reviews, function(d){
-    reviewMap[d.stars-1]++;
-    voteMap[0]+= d.votes.cool;
-    voteMap[1]+= d.votes.funny;
-    voteMap[2]+= d.votes.useful;
+  console.log(data.review_map);
+
+  _.each(Object.keys(data.review_map), function(key){
+    // console.log("item" + item + "key" + item.key);
+    reviewMap[parseInt(key)]=data.review_map[key];
+    // voteMap[0]+= d.votes.cool;
+    // voteMap[1]+= d.votes.funny;
+    // voteMap[2]+= d.votes.useful;
   })
+// reviewMap = data.review_map;
+voteMap[0] = data.vote_map["cool"];
+voteMap[1] = data.vote_map["funny"];
+
+voteMap[2] = data.vote_map["useful"];
 
   //console.log(reviewMap);
 
@@ -1186,7 +1194,7 @@ var g = svg.selectAll("path")
       .attr("dy", ".3em")
       // .attr("dx", "1em")
       .style("text-anchor", "middle")
-      .text(function(d,i) { return voteLabels[i]})
+      .text(function(d,i) { return i})
       .style("font-size", "16px")  
       .style("font-family","arial")
  
