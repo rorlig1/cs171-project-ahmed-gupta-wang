@@ -103,7 +103,7 @@ fieldset[disabled] .btn-default.active {
 }
 .btn-primary {
   color: #fff;
-  background-color: #D9F0A3;
+  background-color: #addd8e;
   border-color: #fff;
 }
 .btn-primary:hover,
@@ -112,7 +112,7 @@ fieldset[disabled] .btn-default.active {
 .btn-primary.active,
 .open .dropdown-toggle.btn-primary {
   color: #fff;
-  background-color: #78C679;
+  background-color: #41ab5d;
   border-color: #fff;
 }
 .btn-primary:active,

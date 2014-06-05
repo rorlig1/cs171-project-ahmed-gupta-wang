@@ -866,18 +866,92 @@ var fill = d3.scale.ordinal().range(['#f1f8a0','#D9F0A3','#238443']).domain([0,1
       for(c in combinations){
         checkin_lookup = combinations[c].lookup
         if(data.checkin.checkin_info[checkin_lookup]){
-          var info = { day: combinations[c].day, hour:combinations[c].hour, value: data.checkin.checkin_info[checkin_lookup]}
+          var info = { day: combinations[c].day, hour:combinations[c].hour, value: data.checkin.checkin_info[checkin_lookup],busi:true}
           array1.push(info)
         } else{
-          var info = { day: combinations[c].day, hour:combinations[c].hour, value: 0}
+          var info = { day: combinations[c].day, hour:combinations[c].hour, value: 0,busi:true}
           array1.push(info)
         }
+
       }
-      data = array1
-     
-     
+     console.log(data)
 
+  
+     // for (s in data.hours){
+     //   if(s=="Sunday"){
+       // console.log( data.hours.Sunday.close )
+        for (f in array1){
+            if (array1[f].day==0){
+               if (data.hours.Sunday){
+                var close= parseInt(data.hours.Sunday.close.substring(0, 4));
+                var open= parseInt( data.hours.Sunday.open.substring(0, 4));
+                if ((array1[f].hour<=open)|| (array1[f].hour>=close)){
+                array1[f].busi=false;
+                }
+               } 
+             }
+            else if (array1[f].day==1){
+            if (data.hours.Monday){
+              var close= parseInt(data.hours.Monday.close.substring(0, 4));
+              var open= parseInt( data.hours.Monday.open.substring(0, 4));
+               if ((array1[f].hour<=open)|| (array1[f].hour>=close)){
+               array1[f].busi=false;
+               }
+               }
+             }
+                 else if (array1[f].day==2){
+            if (data.hours.Tuesday){
+              var close= parseInt(data.hours.Tuesday.close.substring(0, 4));
+              var open= parseInt( data.hours.Tuesday.open.substring(0, 4));
+               if ((array1[f].hour<=open)|| (array1[f].hour>=close)){
+               array1[f].busi=false;
+               }
+               }
+             }
+                 else if (array1[f].day==3){
+            if (data.hours.Wednesday){
+              var close= parseInt(data.hours.Wednesday.close.substring(0, 4));
+              var open= parseInt( data.hours.Wednesday.open.substring(0, 4));
+               if ((array1[f].hour<=open)|| (array1[f].hour>=close)){
+               array1[f].busi=false;
+               }
+               }
+             }
+                 else if (array1[f].day==4){
+            if (data.hours.Thursday){
+              var close= parseInt(data.hours.Thursday.close.substring(0, 4));
+              var open= parseInt( data.hours.Thursday.open.substring(0, 4));
+               if ((array1[f].hour<=open)|| (array1[f].hour>=close)){
+               array1[f].busi=false;
+               }
+               }
+             }
+                 else if (array1[f].day==5){
+            if (data.hours.Friday){
+              var close= parseInt(data.hours.Friday.close.substring(0, 4));
+              var open= parseInt( data.hours.Friday.open.substring(0, 4));
+               if ((array1[f].hour<=open)|| (array1[f].hour>=close)){
+               array1[f].busi=false;
+               }
+               }
+             }
+                 else if (array1[f].day==6){
+            if (data.hours.Saturday){
+              var close= parseInt(data.hours.Saturday.close.substring(0, 4));
+              var open= parseInt( data.hours.Saturday.open.substring(0, 4));
+               if ((array1[f].hour<=open)|| (array1[f].hour>=close)){
+               array1[f].busi=false;
+               }
+               }
+             }
 
+        }
+        
+     //   } 
+
+     // }
+         console.log(array1)
+   data = array1
     var colorScale = d3.scale.quantile()
         .domain([0, buckets - 1, d3.max(data, function (d) { return d.value; })])
         .range(colors);
@@ -961,9 +1035,9 @@ var fill = d3.scale.ordinal().range(['#f1f8a0','#D9F0A3','#238443']).domain([0,1
     heatMap.transition().duration(1000)
         //.style("fill", function(d) { return colorScale(d.value); });
       .style("fill", function(d) { 
-       if (d.hour<4 || d.hour>20 )  {
+       if (!d.busi )  {
           return "#f4f4f4" 
-          return "#f4f4f4"  
+         
       } else {
          return colorScale(d.value*1)
       }  
@@ -1010,28 +1084,20 @@ var fill = d3.scale.ordinal().range(['#f1f8a0','#D9F0A3','#238443']).domain([0,1
 
 function draw_barchart(data){
  // console.log("draw_barchart")
-   console.log(data);
+//   console.log(data);
   var reviewcom=[];
   reviewcom.push(data.stars);
   reviewcom.push(data.recalculate);
-  console.log(reviewcom)
+ // console.log(reviewcom)
   reviewMap =  _.range(5).map(function(){return 0;})
   voteMap = _.range(3).map(function ()  { return 0; })
 
-  console.log(data.review_map);
-
-  _.each(Object.keys(data.review_map), function(key){
-    // console.log("item" + item + "key" + item.key);
-    reviewMap[parseInt(key)]=data.review_map[key];
-    // voteMap[0]+= d.votes.cool;
-    // voteMap[1]+= d.votes.funny;
-    // voteMap[2]+= d.votes.useful;
+  _.each(data.reviews, function(d){
+    reviewMap[d.stars-1]++;
+    voteMap[0]+= d.votes.cool;
+    voteMap[1]+= d.votes.funny;
+    voteMap[2]+= d.votes.useful;
   })
-// reviewMap = data.review_map;
-voteMap[0] = data.vote_map["cool"];
-voteMap[1] = data.vote_map["funny"];
-
-voteMap[2] = data.vote_map["useful"];
 
   //console.log(reviewMap);
 
@@ -1122,7 +1188,7 @@ voteMap[2] = data.vote_map["useful"];
    })
    .attr("text-anchor", "left") 
    .attr("x", function(d, i) {
-    console.log(xscale(d))
+  //  console.log(xscale(d))
        return xscale(d)+50  ;  
    })
    .attr("y", function(d,i) {
@@ -1194,7 +1260,7 @@ var g = svg.selectAll("path")
       .attr("dy", ".3em")
       // .attr("dx", "1em")
       .style("text-anchor", "middle")
-      .text(function(d,i) { return i})
+      .text(function(d,i) { return voteLabels[i]})
       .style("font-size", "16px")  
       .style("font-family","arial")
  

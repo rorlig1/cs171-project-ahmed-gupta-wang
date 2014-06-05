@@ -1,4 +1,11 @@
 //tile of the map....
+$map = $("map");
+
+$(document).on({
+    ajaxStart: function() { $map.addClass("loading");    },
+     ajaxStop: function() { $map.removeClass("loading"); }    
+});
+
 	var restaurantIcon = L.icon({
     iconUrl: 'icon/restaurantmarker13.png',
     iconSize: [45, 45],
@@ -236,7 +243,7 @@ var tiles = L.tileLayer('https://a.tiles.mapbox.com/v3/vieriw.i3f0efm1/{z}/{x}/{
 		map.fitBounds(group.getBounds());
 
 		$("#chart").empty();
-		$("#intro").hide();
+
 		draw_clusters(restaurantsInNeighborhood);
 		// console.log(row)
 		//remove all the geojson layers and markers and add the markers for this layer...
@@ -302,7 +309,6 @@ var tiles = L.tileLayer('https://a.tiles.mapbox.com/v3/vieriw.i3f0efm1/{z}/{x}/{
 			$("#heatmap").empty();
             $("#barchart").empty();
 		    $("#donutchart").empty();
-		    $("#intro").show();
 		}
 	}
 
@@ -322,6 +328,7 @@ var tiles = L.tileLayer('https://a.tiles.mapbox.com/v3/vieriw.i3f0efm1/{z}/{x}/{
 	}
 
 	function clearPins () {
+		$("#intro").empty();
 		_.each(pins, function  (pin) {
 			map.removeLayer(pin);
 		})	

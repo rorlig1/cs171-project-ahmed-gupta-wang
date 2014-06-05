@@ -82,6 +82,33 @@
                margin-top:250px
 
             } 
+            .modal {
+             display:    none;
+             position:   fixed;
+             z-index:    1000;
+             top:        0;
+             left:       0;
+             height:     100%;
+            width:      100%;
+            background: rgba( 255, 255, 255, .8 ) 
+                        url('icon/ajax-loader.gif') 
+                         50% 50% 
+                        no-repeat;
+          }
+
+/* When the body has the loading class, we turn
+   the scrollbar off with overflow:hidden */
+           body.loading {
+           overflow: hidden;   
+          }
+
+/* Anytime the body has the loading class, our
+   modal element will be visible */
+           body.loading .modal {
+           display: block;
+           }
+
+
   /*          #restaurant_cluster {
                 height:700px;
                 width:750px; 
@@ -292,7 +319,7 @@
                 <div id="chart"  ></div>
                  
              </div>
-             <div id="intro">Find your neighborhood and <br><br><br> Click the circle on the map to start. </div> 
+             <div id="intro">Find your county and <br><br><br> Click the circle on the map to start. </div> 
             </div>
             
 
@@ -321,10 +348,11 @@
         <div id = "heatmap" ;></div>
   </div>
   </div>
+
 </div>
 
 
-
+<div class="modal"><!-- Place at bottom of page --></div>
 <!-- project scripts --> 
 <script src="js/heatmap.js"></script>
 

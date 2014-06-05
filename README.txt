@@ -3,9 +3,9 @@ Screen Cast Address:
 https://vimeo.com/93540461
 
 Host Website:
-http://cloud.gowthamj.com:8001
 
-It may take 20 seconds to load the data.
+
+It may take 20-30 seconds to load the data.
 
 
 The main page is index.html
