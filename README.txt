@@ -4,11 +4,18 @@ https://vimeo.com/93540461
 
 Host Website:
 
+http://cloud.gowthamj.com:9002/
+
 
 It may take 20-30 seconds to load the data.
 
 
+
 The main page is index.html
+
+To Run the server locally
+
+python -m SimpleHTTPServer
 
 Yelp data used in the website is in data_with_open folder.
 Raw data and related mongodb scripts are in data, data_revised and mongodb_scripts folders.
